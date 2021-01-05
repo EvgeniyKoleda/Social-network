@@ -1,31 +1,18 @@
 import * as mongoose from 'mongoose';
-import { Sequelize } from 'sequelize-typescript';
+import { createConnection } from 'typeorm';
+
+import typeOrmConfig from './typeOrmConfig';
 
 export let databaseProviders = [
 	{
-		provide: 'DATABASE_CONNECTION',
+		provide: 'MONGO_CONNECTION',
 		useFactory: (): Promise<typeof mongoose> =>
 			mongoose.connect(
 				'mongodb+srv://EVSX:<itechart2020>@socnet.ihe2k.mongodb.net/<SocNet>?retryWrites=true&w=majority',
 			),
 	},
 	{
-		provide: 'SEQUELIZE',
-		useFactory: async () => {
-			let sequelize = new Sequelize({
-				dialect: 'postgres',
-				host: 'localhost',
-				port: 5432,
-				username: 'socnet-admin',
-				password: 'socnet-secure-password',
-				database: 'socnet',
-			});
-
-			sequelize.addModels([]);
-
-			await sequelize.sync();
-
-			return sequelize;
-		},
+		provide: 'POSTGRES_CONNECTION',
+		useFactory: async () => await createConnection(typeOrmConfig),
 	},
 ];
