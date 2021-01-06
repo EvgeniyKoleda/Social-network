@@ -3,14 +3,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import typeOrmConfig from 'src/db/typeOrmConfig';
 import { UsersModule } from 'src/modules/users/users.module';
+import { WalletsModule } from 'src/modules/wallets/wallets.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-// console.log(typeOrmConfig);
-
 @Module({
-	imports: [TypeOrmModule.forRoot(typeOrmConfig), UsersModule],
+	imports: [TypeOrmModule.forRoot(typeOrmConfig), UsersModule, WalletsModule],
 	controllers: [AppController],
 	providers: [AppService],
 })

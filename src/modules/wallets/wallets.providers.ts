@@ -2,13 +2,13 @@ import { Connection } from 'typeorm';
 
 import { DATABASE_CONSTS } from 'src/db/utils/constants';
 
-import { User } from './entities/user.entity';
+import { Wallet } from './entities/wallet.entity';
 import { PROVIDER_CONSTS } from './utils/constants';
 
-export let userProviders = [
+export let walletProviders = [
     {
-        provide: PROVIDER_CONSTS.USER_REPOSITORY,
-        useFactory: (connection: Connection) => connection.getRepository(User),
+        provide: PROVIDER_CONSTS.WALLETS_REPOSITORY,
+        useFactory: (connection: Connection) => connection.getRepository(Wallet),
         inject: [DATABASE_CONSTS.POSTGRES_CONNECTION],
     },
 ];
