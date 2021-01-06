@@ -5,14 +5,18 @@ import typeOrmConfig from './typeOrmConfig';
 
 export let databaseProviders = [
 	{
+		provide: 'POSTGRES_CONNECTION',
+		useFactory: async () => await createConnection(typeOrmConfig),
+	},
+	{
 		provide: 'MONGO_CONNECTION',
 		useFactory: (): Promise<typeof mongoose> =>
 			mongoose.connect(
-				'mongodb+srv://EVSX:<itechart2020>@socnet.ihe2k.mongodb.net/<SocNet>?retryWrites=true&w=majority',
+				'mongodb+srv://socnet-admin:itechart2021@cluster0.ihe2k.mongodb.net/socnet?retryWrites=true&w=majority',
+				{
+					useNewUrlParser: true,
+					useUnifiedTopology: true
+				}
 			),
-	},
-	{
-		provide: 'POSTGRES_CONNECTION',
-		useFactory: async () => await createConnection(typeOrmConfig),
 	},
 ];
