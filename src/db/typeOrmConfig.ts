@@ -2,20 +2,20 @@ import { ConnectionOptions } from 'typeorm';
 
 let config: ConnectionOptions = {
     type: 'postgres',
-    host: 'localhost',
+    host: 'postgres',
     port: 5432,
     username: 'socnet-admin',
     password: 'socnet-secure-password',
     database: 'socnet',
     entities: [
-        'src/modules/**/*.entity{.ts,.js}',
+        'dist/**/*.entity.js',
     ],
     migrations: [
-        'src/db/migrations/*.ts'
+        'dist/db/migrations/*.js'
     ],
     cli: {
         migrationsDir: 'src/db/migrations'
     }
 };
 
-export = config;
+export default config;

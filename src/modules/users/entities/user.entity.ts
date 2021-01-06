@@ -1,10 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, AfterLoad } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
 
-import Model from 'src/utils/model';
-
-@Entity()
-export class User extends Model {
-    @PrimaryGeneratedColumn()
+@Entity('users')
+export class User {
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column({ length: 60, type: 'varchar' })
@@ -16,8 +14,8 @@ export class User extends Model {
     @Column({ length: 120, type: 'varchar' })
     fullName: string;
 
-    @AfterLoad()
-    getFullName() {
+    @BeforeInsert()
+    setFullName() {
         this.fullName = `${this.firstName} ${this.lastName}`;
     }
 
@@ -25,8 +23,8 @@ export class User extends Model {
     email: string;
 
     @Column({ type: 'date' })
-    birthDate: string;
+    birthDate: Date;
 
     @Column({ length: 60, type: 'varchar' })
-    city: number;
+    city: string;
 }
