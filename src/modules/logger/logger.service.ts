@@ -1,78 +1,55 @@
-import { Injectable } from '@nestjs/common';
-import { Logger as DefaultLogger, LoggerService as IDefaultLoggerService } from '@nestjs/common';
-import { InjectConnection } from '@nestjs/mongoose';
-import { Connection, Model } from 'mongoose';
+import { LoggerService as DefaultLoggerService } from '@nestjs/common';
+import { model, Model } from 'mongoose';
 import * as moment from 'moment';
+import * as winston from 'winston';
 
 import { DATE_TIME_FORMAT } from 'src/constants';
 
 import { MessageTypes } from './utils/constants';
-import { LoggerDocument } from './schemas/logger.schema';
+import { Logger, LoggerDocument, LoggerSchema } from './schemas/logger.schema';
 import { WriteNoteDto } from './dto/write-note.dto';
 
-@Injectable()
-export class LoggerService extends DefaultLogger {
-  // loggerModel: Model<LoggerDocument>;
+export class LoggerService implements DefaultLoggerService {
+  private loggerModel: Model<LoggerDocument> = model(Logger.name, LoggerSchema);
+  private winstonLogger = winston.createLogger({
+    transports: [
+      new winston.transports.Console({
+        format: winston.format.combine(winston.format.colorize(), winston.format.timestamp(), winston.format.printf(msg =>
+          `[${moment(msg.timestamp).format(DATE_TIME_FORMAT)}] [${msg.level}] - ${msg.message}`
+        )),
+      }),
+    ],
+  });
 
-  constructor(
-    // @InjectConnection('loggins') private connection: Connection
-  ) {
-    super();
+  async logMessage(type: MessageTypes, message: string, trace: string = '') {
+    this.winstonLogger.log(type, message);
 
-    // this.loggerModel = connection.model('loggins');
+    return this.writeNote({ type, message: message + trace, date: moment().format(DATE_TIME_FORMAT) });
   }
 
-  logMessage(type: MessageTypes, message: string, trace: string = '') {
-    let date = moment().format(DATE_TIME_FORMAT);
+  async writeNote(writeNoteDto: WriteNoteDto) {
+    let loggerNote = new this.loggerModel(writeNoteDto);
 
-    let loggerHandler = super[type];
-    loggerHandler(message, trace);
-
-    // return this.writeNote({ type, message: message + trace, date });
+    return loggerNote.save();
   }
 
-  // async writeNote(writeNoteDto: WriteNoteDto) {
-  //   let loggerNote = new this.loggerModel(writeNoteDto);
-
-  //   return loggerNote.save();
-  // }
-
-  log(message: string) {
-    // super.log(message);
-    console.log('MESSAGE');
-
-    return this.logMessage(MessageTypes.log, message);
+  async log(message: string) {
+    return this.logMessage(MessageTypes.info, message);
   }
 
   async error(message: string, trace: string) {
-    console.log('MESSAGE');
-
-    super.error(message, trace);
-
     return this.logMessage(MessageTypes.error, message, trace);
   }
 
   async warn(message: string) {
-    console.log('MESSAGE');
-
-    super.warn(message);
-
     return this.logMessage(MessageTypes.warn, message);
   }
 
   async debug(message: string) {
-    console.log('MESSAGE');
-
-    super.debug(message);
-
     return this.logMessage(MessageTypes.debug, message);
   }
 
   async verbose(message: string) {
-    console.log('MESSAGE');
-
-    super.verbose(message);
-
     return this.logMessage(MessageTypes.verbose, message);
   }
 }
