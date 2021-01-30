@@ -7,4 +7,7 @@ export default {
 			return `${this.protocol}://${this.hostName}:${this.port}`;
 		},
 	},
+	security: {
+		saltOrRounds: 10,
+	}
 };

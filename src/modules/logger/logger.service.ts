@@ -10,7 +10,7 @@ import { Logger, LoggerDocument, LoggerSchema } from './schemas/logger.schema';
 import { WriteNoteDto } from './dto/write-note.dto';
 
 export class LoggerService implements DefaultLoggerService {
-  private loggerModel: Model<LoggerDocument> = model(Logger.name, LoggerSchema);
+  private loggerModel = model(Logger.name, LoggerSchema);
   private winstonLogger = winston.createLogger({
     transports: [
       new winston.transports.Console({
