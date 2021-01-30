@@ -4,4 +4,6 @@ export interface CreateUserDto {
     readonly city: string;
     readonly email: string;
     readonly birthDate: Date;
+    readonly password: string;
+    readonly login: string;
 }
