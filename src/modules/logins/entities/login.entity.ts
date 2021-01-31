@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, BeforeInsert, JoinColumn } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 
 import config from 'src/config';
@@ -25,6 +25,7 @@ export class Login {
     })
     userId: string
 
-    @OneToOne(type => User)
+    @OneToOne(type => User, user => user.login)
+    @JoinColumn()
     user: User;
 }

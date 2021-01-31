@@ -26,6 +26,12 @@ export class UsersService {
       throw new HttpException(ERRORS.dataErrors.invalidDataProvided, HttpStatus.BAD_REQUEST);
     }
 
+    let isUserExist = await this.userRepository.findOne({ where: { email: createUserDto.email } });
+
+    if (isUserExist) {
+      throw new HttpException(ERRORS.dataErrors.userWithSuchEmailExists, HttpStatus.BAD_REQUEST);
+    }
+
     let queryRunner = this.connection.createQueryRunner();
 
     await queryRunner.connect();
@@ -49,8 +55,8 @@ export class UsersService {
     return this.userRepository.find();
   }
 
-  async findOne(id: string): Promise<User> {
-    return this.userRepository.findOne(id);
+  async findOne(query: { [key: string]: string | null | number }): Promise<User> {
+    return this.userRepository.findOne(query);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
