@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import * as helmet from 'helmet';
 
 import config from 'src/config';
 
@@ -12,6 +13,8 @@ async function bootstrap() {
 	});
 
 	app.setGlobalPrefix('api');
+
+	app.use(helmet());
 
 	await app.listen(config.host.port);
 }
