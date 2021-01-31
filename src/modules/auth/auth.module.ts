@@ -12,17 +12,19 @@ import { LocalStrategy } from './local/local.strategy';
 import { JwtStrategy } from './jwt/jwt.strategy';
 
 @Module({
-  imports: [
-    PassportModule, 
-    LoginsModule,
-    UsersModule,
-    JwtModule.register({
-      secret: config.security.secretKey,
-      signOptions: { expiresIn: `${config.security.expiresIn.time}${config.security.expiresIn.unit}` },
-    }),
-  ],
-  controllers: [AuthController],
-  providers: [LocalStrategy, AuthService, JwtStrategy],
-  exports: [JwtModule]
+	imports: [
+		PassportModule,
+		LoginsModule,
+		UsersModule,
+		JwtModule.register({
+			secret: config.security.secretKey,
+			signOptions: {
+				expiresIn: `${config.security.expiresIn.time}${config.security.expiresIn.unit}`,
+			},
+		}),
+	],
+	controllers: [AuthController],
+	providers: [LocalStrategy, AuthService, JwtStrategy],
+	exports: [JwtModule],
 })
 export class AuthModule {}

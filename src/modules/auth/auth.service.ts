@@ -8,38 +8,45 @@ import { LoginsService } from 'src/modules/logins/logins.service';
 import { User } from 'src/modules/users/entities/user.entity';
 
 export type JWTPayloadType = {
-    userId: string,
+	userId: string;
 };
 
 @Injectable()
 export class AuthService {
-    constructor(
-        private loginsService: LoginsService,
-        private jwtService: JwtService,
-    ) {}
+	constructor(
+		private loginsService: LoginsService,
+		private jwtService: JwtService,
+	) {}
 
-    async validateUser(login: string, password: string): Promise<User | null> {
-        let { user, ...loginData } = await this.loginsService.findOne({ login });
+	async validateUser(login: string, password: string): Promise<User | null> {
+		let { user, ...loginData } = await this.loginsService.findOne({
+			login,
+		});
 
-        if(!loginData) {
-            return null;
-        }
+		if (!loginData) {
+			return null;
+		}
 
-        let isMatchPassord = await bcrypt.compare(password, loginData.password);
+		let isMatchPassord = await bcrypt.compare(password, loginData.password);
 
-        if (isMatchPassord) {
-            return user;
-        }
+		if (isMatchPassord) {
+			return user;
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    async login(user: User) {
-        let payload: JWTPayloadType = { userId: user.id };
+	async login(user: User) {
+		let payload: JWTPayloadType = { userId: user.id };
 
-        return {
-            access_token: this.jwtService.sign(payload),
-            expiresIn: moment().add(Number(config.security.expiresIn.time), <moment.unitOfTime.DurationConstructor>config.security.expiresIn.unit),
-        };
-    }
+		return {
+			access_token: this.jwtService.sign(payload),
+			expiresIn: moment().add(
+				Number(config.security.expiresIn.time),
+				<moment.unitOfTime.DurationConstructor>(
+					config.security.expiresIn.unit
+				),
+			),
+		};
+	}
 }

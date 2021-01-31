@@ -16,8 +16,8 @@ export let databaseProviders = [
 				'mongodb+srv://socnet-admin:itechart2021@cluster0.ihe2k.mongodb.net/socnet?retryWrites=true&w=majority',
 				{
 					useNewUrlParser: true,
-					useUnifiedTopology: true
-				}
+					useUnifiedTopology: true,
+				},
 			),
 	},
 ];

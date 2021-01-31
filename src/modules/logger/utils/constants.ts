@@ -3,9 +3,9 @@
 // };
 
 export enum MessageTypes {
-    error = 'error',
-    info = 'info',
-    warn = 'warn',
-    debug = 'debug',
-    verbose = 'verbose',
-};
+	error = 'error',
+	info = 'info',
+	warn = 'warn',
+	debug = 'debug',
+	verbose = 'verbose',
+}

@@ -14,5 +14,5 @@ export default {
 			time: '10',
 			unit: 'm',
 		},
-	}
+	},
 };
