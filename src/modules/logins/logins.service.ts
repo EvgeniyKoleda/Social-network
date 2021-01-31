@@ -23,7 +23,7 @@ export class LoginsService {
   }
 
   async findOne(query: { [key: string]: string | null | number }): Promise<Login> {
-    return this.loginRepository.findOne({ where: query });
+    return this.loginRepository.findOne({ where: query, relations: ['user'] });
   }
 
   async update(userId: string, updateUserDto: UpdateLoginDto): Promise<Login> {

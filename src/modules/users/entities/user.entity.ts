@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, OneToOne, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, OneToOne } from 'typeorm';
 
 import { Login } from 'src/modules/logins/entities/login.entity';
 
@@ -21,7 +21,7 @@ export class User {
     @Column({ length: 120, type: 'varchar' })
     fullName: string;
 
-    @Column({ length: 30, type: 'varchar' })
+    @Column({ length: 30, type: 'varchar', unique: true })
     email: string;
 
     @Column({ type: 'date' })
@@ -30,7 +30,6 @@ export class User {
     @Column({ length: 60, type: 'varchar' })
     city: string;
 
-    @OneToOne(type => Login)
-    @JoinTable()
+    @OneToOne(type => Login, login => login.user)
     login: Login;
 }
