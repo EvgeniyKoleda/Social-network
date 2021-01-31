@@ -1,8 +1,8 @@
 # compiled output
 /dist
 /node_modules
-/docker_volumes/
-
+/docker_volumes
+/documentation
 # Logs
 logs
 *.log
