@@ -1,4 +1,4 @@
 export interface UpdateLoginDto {
-    login?: string;
-    password?: string;
+	login?: string;
+	password?: string;
 }

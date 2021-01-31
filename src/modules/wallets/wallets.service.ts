@@ -8,35 +8,38 @@ import { PROVIDER_CONSTS } from './utils/constants';
 
 @Injectable()
 export class WalletsService {
-  constructor(
-    @Inject(PROVIDER_CONSTS.WALLETS_REPOSITORY)
-    private walletRepository: Repository<Wallet>,
-  ) { }
+	constructor(
+		@Inject(PROVIDER_CONSTS.WALLETS_REPOSITORY)
+		private walletRepository: Repository<Wallet>,
+	) {}
 
-  async create(createWalletDto: CreateWalletDto): Promise<Wallet> {
-    let cretedWallet = new Wallet();
-    let wallet = Object.assign(cretedWallet, createWalletDto);
+	async create(createWalletDto: CreateWalletDto): Promise<Wallet> {
+		let cretedWallet = new Wallet();
+		let wallet = Object.assign(cretedWallet, createWalletDto);
 
-    return this.walletRepository.save(wallet);
-  }
+		return this.walletRepository.save(wallet);
+	}
 
-  async findAll(): Promise<Wallet[]> {
-    return this.walletRepository.find();
-  }
+	async findAll(): Promise<Wallet[]> {
+		return this.walletRepository.find();
+	}
 
-  async findOne(id: string): Promise<Wallet> {
-    return this.walletRepository.findOne(id);
-  }
+	async findOne(id: string): Promise<Wallet> {
+		return this.walletRepository.findOne(id);
+	}
 
-  async update(id: string, updateWalletDto: UpdateWalletDto): Promise<Wallet> {
-    await this.walletRepository.save({ id, ...updateWalletDto });
+	async update(
+		id: string,
+		updateWalletDto: UpdateWalletDto,
+	): Promise<Wallet> {
+		await this.walletRepository.save({ id, ...updateWalletDto });
 
-    return this.walletRepository.findOne(id);
-  }
+		return this.walletRepository.findOne(id);
+	}
 
-  async remove(id: string): Promise<{ id: string }> {
-    await this.walletRepository.delete(id);
+	async remove(id: string): Promise<{ id: string }> {
+		await this.walletRepository.delete(id);
 
-    return { id };
-  }
+		return { id };
+	}
 }

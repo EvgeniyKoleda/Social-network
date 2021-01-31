@@ -9,11 +9,8 @@ import { WalletsService } from './wallets.service';
 import { WalletsController } from './wallets.controller';
 
 @Module({
-  imports: [DatabaseModule, TypeOrmModule.forFeature([Wallet])],
-  controllers: [WalletsController],
-  providers: [
-    ...walletProviders,
-    WalletsService,
-  ]
+	imports: [DatabaseModule, TypeOrmModule.forFeature([Wallet])],
+	controllers: [WalletsController],
+	providers: [...walletProviders, WalletsService],
 })
-export class WalletsModule { }
+export class WalletsModule {}

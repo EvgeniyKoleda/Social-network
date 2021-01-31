@@ -11,40 +11,51 @@ import { PROVIDER_CONSTS } from './utils/constants';
 
 @Injectable()
 export class LoginsService {
-  constructor(
-    @Inject(PROVIDER_CONSTS.LOGIN_REPOSITORY)
-    private loginRepository: Repository<Login>,
-  ) { }
+	constructor(
+		@Inject(PROVIDER_CONSTS.LOGIN_REPOSITORY)
+		private loginRepository: Repository<Login>,
+	) {}
 
-  async create(createLoginDto: CreateLoginDto): Promise<Login> {
-    let login = Object.assign(new Login(), createLoginDto);
+	async create(createLoginDto: CreateLoginDto): Promise<Login> {
+		let login = Object.assign(new Login(), createLoginDto);
 
-    return this.loginRepository.save(login);
-  }
+		return this.loginRepository.save(login);
+	}
 
-  async findOne(query: { [key: string]: string | null | number }): Promise<Login> {
-    return this.loginRepository.findOne({ where: query, relations: ['user'] });
-  }
+	async findOne(query: {
+		[key: string]: string | null | number;
+	}): Promise<Login> {
+		return this.loginRepository.findOne({
+			where: query,
+			relations: ['user'],
+		});
+	}
 
-  async update(userId: string, updateUserDto: UpdateLoginDto): Promise<Login> {
-    let login = await this.findOne({ userId });
+	async update(
+		userId: string,
+		updateUserDto: UpdateLoginDto,
+	): Promise<Login> {
+		let login = await this.findOne({ userId });
 
-    let loginData = { ...updateUserDto };
+		let loginData = { ...updateUserDto };
 
-    if(updateUserDto.password) {
-      loginData.password = await bcrypt.hash(updateUserDto.password, config.security.saltOrRounds);
-    }
+		if (updateUserDto.password) {
+			loginData.password = await bcrypt.hash(
+				updateUserDto.password,
+				config.security.saltOrRounds,
+			);
+		}
 
-    await this.loginRepository.save({ id: login.id, ...loginData });
-    
-    return this.loginRepository.findOne({ id: login.id });
-  } 
+		await this.loginRepository.save({ id: login.id, ...loginData });
 
-  async remove(userId: string): Promise<{ id: string }> {
-    let login = await this.findOne({ userId });
+		return this.loginRepository.findOne({ id: login.id });
+	}
 
-    await this.loginRepository.delete(login.id);
+	async remove(userId: string): Promise<{ id: string }> {
+		let login = await this.findOne({ userId });
 
-    return { id: login.id };
-  }
+		await this.loginRepository.delete(login.id);
+
+		return { id: login.id };
+	}
 }

@@ -8,22 +8,22 @@ import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local/local-auth.guard';
 
 @Controller()
-export class AuthController {    
-    constructor(
-        private authService: AuthService,
-        private usersService: UsersService,
-    ) {}
+export class AuthController {
+	constructor(
+		private authService: AuthService,
+		private usersService: UsersService,
+	) {}
 
-    @Public()
+	@Public()
 	@UseGuards(LocalAuthGuard)
-    @Post('auth/login')
-    async login(@Request() req) {
-        return this.authService.login(req.user);
-    }
+	@Post('auth/login')
+	async login(@Request() req) {
+		return this.authService.login(req.user);
+	}
 
-    @Public()
-    @Post('auth/signup')
-    create(@Body() createUserDto: CreateUserDto) {
-        return this.usersService.create(createUserDto);
-    }
+	@Public()
+	@Post('auth/signup')
+	create(@Body() createUserDto: CreateUserDto) {
+		return this.usersService.create(createUserDto);
+	}
 }

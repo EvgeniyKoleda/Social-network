@@ -8,11 +8,8 @@ import { loginProviders } from './logins.providers';
 import { LoginsService } from './logins.service';
 
 @Module({
-  imports: [DatabaseModule, TypeOrmModule.forFeature([Login])],
-  providers: [
-    ...loginProviders,
-    LoginsService,
-  ],
-  exports: [LoginsService]
+	imports: [DatabaseModule, TypeOrmModule.forFeature([Login])],
+	providers: [...loginProviders, LoginsService],
+	exports: [LoginsService],
 })
-export class LoginsModule { }
+export class LoginsModule {}

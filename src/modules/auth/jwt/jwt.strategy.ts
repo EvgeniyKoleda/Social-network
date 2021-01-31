@@ -8,15 +8,15 @@ import { JWTPayloadType } from '../auth.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-    constructor() {
-        super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            ignoreExpiration: false,
-            secretOrKey: config.security.secretKey,
-        });
-    }
+	constructor() {
+		super({
+			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+			ignoreExpiration: false,
+			secretOrKey: config.security.secretKey,
+		});
+	}
 
-    async validate(payload: JWTPayloadType) {
-        return payload;
-    }
+	async validate(payload: JWTPayloadType) {
+		return payload;
+	}
 }
