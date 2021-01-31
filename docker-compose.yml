@@ -16,6 +16,22 @@ services:
         depends_on:
             - 'mongo'
             - 'postgres'
+    main-app-doc:
+        container_name: main-app-doc
+        restart: always
+        networks:
+            - socnet
+        build:
+            context: .
+            dockerfile: Dockerfile.docs
+        volumes:
+            - ./:/app
+        ports:
+            - '8080:8080'
+        depends_on:
+            - 'mongo'
+            - 'postgres'
+            - 'main-app'
     mongo:
         image: mongo
         restart: always
@@ -46,5 +62,5 @@ networks:
     socnet:
         driver: bridge
         driver_opts:
-            com.docker.network.bridge.enable_ip_masquerade: "true" 
-            com.docker.network.bridge.enable_icc: "true"
+            com.docker.network.bridge.enable_ip_masquerade: 'true'
+            com.docker.network.bridge.enable_icc: 'true'
