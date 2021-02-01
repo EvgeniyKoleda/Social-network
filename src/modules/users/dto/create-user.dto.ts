@@ -1,4 +1,4 @@
-export interface CreateUserDto {
+export class CreateUserDto {
 	readonly firstName: string;
 	readonly lastName: string;
 	readonly city: string;

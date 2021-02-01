@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 9000
 
-ENTRYPOINT ["npx", "@compodoc/compodoc", "-p", "tsconfig.json", "-s", "-n", "EVSX social network API"]
+ENTRYPOINT ["npx", "@compodoc/compodoc", "-p", "tsconfig.json", "-s", "-n", "EVSX social network API", "--includes", "./src/swagger"]
