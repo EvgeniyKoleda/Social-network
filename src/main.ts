@@ -3,6 +3,7 @@ import * as helmet from 'helmet';
 
 import config from 'src/config';
 
+import { enableSwagger } from 'src/swagger';
 import { AppModule } from 'src/modules/app/app.module';
 import { LoggerService } from 'src/modules/logger/logger.service';
 
@@ -12,9 +13,11 @@ async function bootstrap() {
 		cors: true,
 	});
 
+	app.use(helmet());
+
 	app.setGlobalPrefix('api');
 
-	app.use(helmet());
+	enableSwagger(app);
 
 	await app.listen(config.host.port);
 }
