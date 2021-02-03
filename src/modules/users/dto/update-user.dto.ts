@@ -19,6 +19,6 @@ export class UpdateUserDto {
 	@ApiPropertyOptional()
 	readonly password?: string;
 
-	@ApiPropertyOptional()	
+	@ApiPropertyOptional()
 	readonly login?: string;
 }

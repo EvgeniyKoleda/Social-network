@@ -1,6 +1,10 @@
 import { Module, INestApplication } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SwaggerModule, DocumentBuilder, SwaggerDocumentOptions } from '@nestjs/swagger';
+import {
+	SwaggerModule,
+	DocumentBuilder,
+	SwaggerDocumentOptions,
+} from '@nestjs/swagger';
 
 import { DatabaseModule } from 'src/db/database.module';
 import { AuthModule } from 'src/modules/auth/auth.module';
@@ -19,24 +23,19 @@ export class WalletsModule {}
 
 export let enableWalletsSwagger = (app: INestApplication) => {
 	let swaggerConfig = new DocumentBuilder()
-	.setTitle('EVSX social network[Wallets]')
-	.setDescription('The EVSX social network API description')
-	.setVersion('1.0')
-	.addTag('EVSX')
-	.addBearerAuth()
-	.build();
+		.setTitle('EVSX social network[Wallets]')
+		.setDescription('The EVSX social network API description')
+		.setVersion('1.0')
+		.addTag('EVSX')
+		.addBearerAuth()
+		.build();
 
-	let options: SwaggerDocumentOptions =  {
-		operationIdFactory: (
-			controllerKey: string,
-			methodKey: string
-		) => methodKey,
-		include: [
-			WalletsModule,
-			AuthModule,
-		],
+	let options: SwaggerDocumentOptions = {
+		operationIdFactory: (controllerKey: string, methodKey: string) =>
+			methodKey,
+		include: [WalletsModule, AuthModule],
 	};
 
 	let document = SwaggerModule.createDocument(app, swaggerConfig, options);
 	SwaggerModule.setup('swagger/wallets', app, document);
-} 
+};

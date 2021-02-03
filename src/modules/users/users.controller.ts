@@ -1,5 +1,13 @@
 import { Controller, Get, Body, Put, Param, Delete } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiCreatedResponse, ApiOkResponse, ApiUnauthorizedResponse, ApiBadRequestResponse, ApiBody } from '@nestjs/swagger';
+import {
+	ApiBearerAuth,
+	ApiTags,
+	ApiCreatedResponse,
+	ApiOkResponse,
+	ApiUnauthorizedResponse,
+	ApiBadRequestResponse,
+	ApiBody,
+} from '@nestjs/swagger';
 
 import { RESPONSES, Error, DeletedObject } from 'src/constants';
 
@@ -13,43 +21,43 @@ import { User } from './entities/user.entity';
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
-	@ApiUnauthorizedResponse({ 
+	@ApiUnauthorizedResponse({
 		description: RESPONSES.UNATHORIZED(),
-		type: Error 
+		type: Error,
 	})
-	@ApiOkResponse({ 
+	@ApiOkResponse({
 		description: RESPONSES.RETURN_ALL('users'),
-		type: [User] 
+		type: [User],
 	})
 	@Get()
 	findAll() {
 		return this.usersService.findAll();
 	}
 
-	@ApiUnauthorizedResponse({ 
+	@ApiUnauthorizedResponse({
 		description: RESPONSES.UNATHORIZED(),
-		type: Error 
+		type: Error,
 	})
-	@ApiOkResponse({ 
+	@ApiOkResponse({
 		description: RESPONSES.RETURN('user'),
-		type: User  
+		type: User,
 	})
 	@Get(':id')
 	findOne(@Param('id') id: string) {
 		return this.usersService.findOne({ id });
 	}
 
-	@ApiCreatedResponse({ 
+	@ApiCreatedResponse({
 		description: RESPONSES.UPDATE('user'),
-		type: User  
+		type: User,
 	})
-	@ApiUnauthorizedResponse({ 
+	@ApiUnauthorizedResponse({
 		description: RESPONSES.UNATHORIZED(),
-		type: Error 
+		type: Error,
 	})
-	@ApiBadRequestResponse({ 
+	@ApiBadRequestResponse({
 		description: RESPONSES.BAD_REQUEST(),
-		type: Error 
+		type: Error,
 	})
 	@Put(':id')
 	@ApiBody({ type: UpdateUserDto })
@@ -57,17 +65,17 @@ export class UsersController {
 		return this.usersService.update(id, updateUserDto);
 	}
 
-	@ApiUnauthorizedResponse({ 
+	@ApiUnauthorizedResponse({
 		description: RESPONSES.UNATHORIZED(),
-		type: Error 
+		type: Error,
 	})
-	@ApiBadRequestResponse({ 
+	@ApiBadRequestResponse({
 		description: RESPONSES.BAD_REQUEST(),
-		type: Error 
+		type: Error,
 	})
-	@ApiOkResponse({ 
+	@ApiOkResponse({
 		description: RESPONSES.DELETE('user'),
-		type: DeletedObject
+		type: DeletedObject,
 	})
 	@Delete(':id')
 	remove(@Param('id') id: string) {

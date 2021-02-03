@@ -7,9 +7,18 @@ import {
 	Param,
 	Delete,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiCreatedResponse, ApiOkResponse, ApiUnauthorizedResponse, ApiBadRequestResponse, ApiBody, ApiProperty } from '@nestjs/swagger';
+import {
+	ApiBearerAuth,
+	ApiTags,
+	ApiCreatedResponse,
+	ApiOkResponse,
+	ApiUnauthorizedResponse,
+	ApiBadRequestResponse,
+	ApiBody,
+	ApiProperty,
+} from '@nestjs/swagger';
 
-import { RESPONSES, Error, DeletedObject} from 'src/constants';
+import { RESPONSES, Error, DeletedObject } from 'src/constants';
 
 import { Wallet } from './entities/wallet.entity';
 import { WalletsService } from './wallets.service';
@@ -22,17 +31,17 @@ import { UpdateWalletDto } from './dto/update-wallet.dto';
 export class WalletsController {
 	constructor(private readonly walletsService: WalletsService) {}
 
-	@ApiCreatedResponse({ 
+	@ApiCreatedResponse({
 		description: RESPONSES.CREATE('wallet'),
 		type: Wallet,
 	})
-	@ApiUnauthorizedResponse({ 
+	@ApiUnauthorizedResponse({
 		description: RESPONSES.UNATHORIZED(),
-		type: Error 
+		type: Error,
 	})
-	@ApiBadRequestResponse({ 
+	@ApiBadRequestResponse({
 		description: RESPONSES.BAD_REQUEST(),
-		type: Error 
+		type: Error,
 	})
 	@Post()
 	@ApiBody({ type: CreateWalletDto })
@@ -40,11 +49,11 @@ export class WalletsController {
 		return this.walletsService.create(createWalletDto);
 	}
 
-	@ApiUnauthorizedResponse({ 
+	@ApiUnauthorizedResponse({
 		description: RESPONSES.UNATHORIZED(),
-		type: Error 
+		type: Error,
 	})
-	@ApiOkResponse({ 
+	@ApiOkResponse({
 		description: RESPONSES.RETURN_ALL('wallets'),
 		type: [Wallet],
 	})
@@ -53,11 +62,11 @@ export class WalletsController {
 		return this.walletsService.findAll();
 	}
 
-	@ApiUnauthorizedResponse({ 
+	@ApiUnauthorizedResponse({
 		description: RESPONSES.UNATHORIZED(),
-		type: Error 
+		type: Error,
 	})
-	@ApiOkResponse({ 
+	@ApiOkResponse({
 		description: RESPONSES.RETURN('wallet'),
 		type: Wallet,
 	})
@@ -66,17 +75,17 @@ export class WalletsController {
 		return this.walletsService.findOne(id);
 	}
 
-	@ApiCreatedResponse({ 
+	@ApiCreatedResponse({
 		description: RESPONSES.UPDATE('wallet'),
 		type: Wallet,
 	})
-	@ApiUnauthorizedResponse({ 
+	@ApiUnauthorizedResponse({
 		description: RESPONSES.UNATHORIZED(),
-		type: Error 
+		type: Error,
 	})
-	@ApiBadRequestResponse({ 
+	@ApiBadRequestResponse({
 		description: RESPONSES.BAD_REQUEST(),
-		type: Error 
+		type: Error,
 	})
 	@Put(':id')
 	@ApiBody({ type: UpdateWalletDto })
@@ -84,17 +93,17 @@ export class WalletsController {
 		return this.walletsService.update(id, updateWalletDto);
 	}
 
-	@ApiUnauthorizedResponse({ 
+	@ApiUnauthorizedResponse({
 		description: RESPONSES.UNATHORIZED(),
-		type: Error 
+		type: Error,
 	})
-	@ApiBadRequestResponse({ 
+	@ApiBadRequestResponse({
 		description: RESPONSES.BAD_REQUEST(),
-		type: Error 
+		type: Error,
 	})
-	@ApiOkResponse({ 
+	@ApiOkResponse({
 		description: RESPONSES.DELETE('wallet'),
-		type: DeletedObject
+		type: DeletedObject,
 	})
 	@Delete(':id')
 	remove(@Param('id') id: string) {
