@@ -1,4 +1,4 @@
-import { Module, INestApplication, forwardRef } from '@nestjs/common';
+import { Module, INestApplication } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
 	SwaggerModule,

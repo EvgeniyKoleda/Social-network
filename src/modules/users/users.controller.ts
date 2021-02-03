@@ -1,6 +1,12 @@
 import { Body, Param } from '@nestjs/common';
 
-import { CustomController, ApiGet, ApiGetAll, ApiPut, ApiDelete } from 'src/utils/decorators';
+import {
+	CustomController,
+	ApiGet,
+	ApiGetAll,
+	ApiPut,
+	ApiDelete,
+} from 'src/utils/decorators';
 
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';

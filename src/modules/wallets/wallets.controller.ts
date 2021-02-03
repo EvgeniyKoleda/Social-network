@@ -1,6 +1,13 @@
 import { Body, Param } from '@nestjs/common';
 
-import { CustomController, ApiGet, ApiGetAll, ApiPost, ApiPut, ApiDelete } from 'src/utils/decorators';
+import {
+	CustomController,
+	ApiGet,
+	ApiGetAll,
+	ApiPost,
+	ApiPut,
+	ApiDelete,
+} from 'src/utils/decorators';
 
 import { Wallet } from './entities/wallet.entity';
 import { WalletsService } from './wallets.service';
@@ -10,7 +17,6 @@ import { UpdateWalletDto } from './dto/update-wallet.dto';
 @CustomController('wallets')
 export class WalletsController {
 	constructor(private readonly walletsService: WalletsService) {}
-
 
 	@ApiPost(Wallet, 'wallets', CreateWalletDto)
 	create(@Body() createWalletDto: CreateWalletDto) {
