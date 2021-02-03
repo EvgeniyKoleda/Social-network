@@ -44,7 +44,6 @@ export class User {
 	@Column({ length: 60, type: 'varchar' })
 	city: string;
 
-	
 	@OneToOne(() => Login, (login) => login.user)
 	login: Login;
 }

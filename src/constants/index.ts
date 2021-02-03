@@ -20,7 +20,7 @@ export const RESPONSES = {
 	CREATE: (entity: string) => `Create ${entity} in system.`,
 	UPDATE: (entity: string) => `Update ${entity} in system.`,
 	DELETE: (entity: string) => `Delete ${entity} in system.`,
-}
+};
 
 export class Error {
 	@ApiProperty()
