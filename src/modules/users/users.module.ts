@@ -1,4 +1,4 @@
-import { Module, INestApplication, forwardRef } from '@nestjs/common';
+import { Module, INestApplication } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
 	SwaggerModule,
@@ -14,11 +14,12 @@ import { User } from './entities/user.entity';
 import { userProviders } from './users.providers';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
+import { UsersResolver } from './graphql/users.resolver';
 
 @Module({
 	imports: [DatabaseModule, TypeOrmModule.forFeature([User]), LoginsModule],
 	controllers: [UsersController],
-	providers: [...userProviders, UsersService],
+	providers: [...userProviders, UsersService, UsersResolver],
 	exports: [UsersService],
 })
 export class UsersModule {}
