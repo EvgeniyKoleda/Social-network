@@ -11,6 +11,8 @@ import { AuthController } from './auth.controller';
 import { LocalStrategy } from './local/local.strategy';
 import { JwtStrategy } from './jwt/jwt.strategy';
 
+import { AuthResolver } from './graphql/auth.resolver';
+
 @Module({
 	imports: [
 		PassportModule,
@@ -24,7 +26,7 @@ import { JwtStrategy } from './jwt/jwt.strategy';
 		}),
 	],
 	controllers: [AuthController],
-	providers: [LocalStrategy, AuthService, JwtStrategy],
+	providers: [LocalStrategy, AuthService, JwtStrategy, AuthResolver],
 	exports: [JwtModule],
 })
 export class AuthModule {}

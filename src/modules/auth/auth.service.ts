@@ -40,7 +40,7 @@ export class AuthService {
 		let payload: JWTPayloadType = { userId: user.id };
 
 		return {
-			access_token: this.jwtService.sign(payload),
+			accessToken: this.jwtService.sign(payload),
 			expiresIn: moment().add(
 				Number(config.security.expiresIn.time),
 				<moment.unitOfTime.DurationConstructor>(

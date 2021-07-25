@@ -17,6 +17,7 @@ type User {
     id: String
     firstName: String
     lastName: String
+	fullName: String
     city: String
     email: String
     password: String

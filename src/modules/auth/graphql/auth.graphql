@@ -1,0 +1,12 @@
+scalar Date
+
+
+type Mutation {
+    login(login: String!, password: String!): Login
+}
+
+
+type Login {
+    accessToken: String
+    expiresIn: Float
+}
