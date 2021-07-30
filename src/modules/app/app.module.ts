@@ -7,7 +7,6 @@ import typeOrmConfig from 'src/db/typeOrmConfig';
 import { UsersModule } from 'src/modules/users/users.module';
 import { WalletsModule } from 'src/modules/wallets/wallets.module';
 import { AuthModule } from 'src/modules/auth/auth.module';
-import { JwtAuthGuard } from 'src/modules/auth/jwt/jwt-auth.guard';
 import { DateScalar } from 'src/types/date';
 
 import { AppController } from './app.controller';

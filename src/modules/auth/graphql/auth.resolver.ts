@@ -1,7 +1,6 @@
-import { UseGuards, UnauthorizedException } from '@nestjs/common';
+import { UnauthorizedException } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
-// import { GqlAuthGuard } from 'src/modules/auth/jwt/jwt-graphql.guard';
 import { Public } from 'src/modules/auth/public/public.decorator';
 
 import { AuthService } from '../auth.service';
