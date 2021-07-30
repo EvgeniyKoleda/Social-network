@@ -1,0 +1,6 @@
+type Login {
+    id: String
+    password: String
+    login: String
+    userId: String
+}

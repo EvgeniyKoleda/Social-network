@@ -1,12 +1,24 @@
 scalar Date
 
-
 type Mutation {
-    login(login: String!, password: String!): Login
+    login(login: String!, password: String!): LoginData
 }
 
+type Mutation {
+    signup(userData: CreateUserInput): User
+}
 
-type Login {
+input CreateUserInput {
+    firstName: String
+    lastName: String
+    city: String
+    email: String
+    birthDate: Date
+	password: String
+    login: String
+}
+
+type LoginData {
     accessToken: String
     expiresIn: Float
 }

@@ -1,8 +1,9 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 
 import config from 'src/config';
+import { ERRORS } from 'src/constants';
 
 import { Login } from './entities/login.entity';
 import { CreateLoginDto } from './dto/create-login.dto';
@@ -17,6 +18,17 @@ export class LoginsService {
 	) {}
 
 	async create(createLoginDto: CreateLoginDto): Promise<Login> {
+		let isLoginExist = await this.loginRepository.findOne({
+			where: { login: createLoginDto.login },
+		});
+
+		if (isLoginExist) {
+			throw new HttpException(
+				ERRORS.dataErrors.userWithSuchLoginExists,
+				HttpStatus.BAD_REQUEST,
+			);
+		}
+
 		let login = Object.assign(new Login(), createLoginDto);
 
 		return this.loginRepository.save(login);

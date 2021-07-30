@@ -48,16 +48,18 @@ export class UsersService {
 		try {
 			let user = Object.assign(new User(), userData);
 
-			let createdUser = await this.userRepository.save(user);
-			await this.loginsService.create({
+			let createdUser = await queryRunner.manager.save(user);
+			let createdLogin = await this.loginsService.create({
 				password,
 				login,
 				userId: createdUser.id,
 			});
+			await queryRunner.commitTransaction();
 
-			return createdUser;
+			return { ...createdUser, login: createdLogin } as User;
 		} catch (e) {
 			await queryRunner.rollbackTransaction();
+			throw e;
 		} finally {
 			await queryRunner.release();
 		}

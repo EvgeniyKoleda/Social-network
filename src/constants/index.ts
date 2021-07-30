@@ -9,6 +9,7 @@ export const ERRORS = {
 		invalidDataProvided: 'Invalid data provided',
 		wrongCredentials: 'Wrong credentials',
 		userWithSuchEmailExists: 'User with such email already exists',
+		userWithSuchLoginExists: 'User with such login already exists',
 	},
 };
 

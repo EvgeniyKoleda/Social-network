@@ -21,7 +21,7 @@ type User {
     city: String
     email: String
     password: String
-    login: String
+    login: Login
     birthDate: Date
 }
 
