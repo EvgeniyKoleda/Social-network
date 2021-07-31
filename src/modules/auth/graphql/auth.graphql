@@ -8,17 +8,25 @@ type Mutation {
     signup(userData: CreateUserInput): User
 }
 
+type Mutation {
+    resetPassword(email: String!): ResetPasswordResponse
+}
+
 input CreateUserInput {
-    firstName: String
-    lastName: String
-    city: String
-    email: String
-    birthDate: Date
-	password: String
-    login: String
+    firstName: String!
+    lastName: String!
+    city: String!
+    email: String!
+    birthDate: Date!
+	password: String!
+    login: String!
 }
 
 type LoginData {
     accessToken: String
     expiresIn: Float
+}
+
+type ResetPasswordResponse {
+	id: String
 }
