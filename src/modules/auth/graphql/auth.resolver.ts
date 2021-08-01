@@ -31,7 +31,7 @@ export class AuthResolver {
 
 	@Mutation('resetPassword')
 	async resetPassword(@Args('email') email: string) {
-		return this.usersService.resetPassword(email);
+		return this.authService.resetPassword(email);
 	}
 
 	@Mutation('signup')

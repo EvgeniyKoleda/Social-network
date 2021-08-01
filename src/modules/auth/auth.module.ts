@@ -8,6 +8,7 @@ import { UsersModule } from 'src/modules/users/users.module';
 import { UsersService } from 'src/modules/users/users.service';
 import { userProviders } from 'src/modules/users/users.providers';
 import { DatabaseModule } from 'src/db/database.module';
+import { EmailModule } from 'src/modules/email/email.module';
 
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
@@ -28,6 +29,7 @@ import { AuthResolver } from './graphql/auth.resolver';
 			},
 		}),
 		DatabaseModule,
+		EmailModule,
 	],
 	controllers: [AuthController],
 	providers: [

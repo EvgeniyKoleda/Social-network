@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
 import typeOrmConfig from 'src/db/typeOrmConfig';
 import { UsersModule } from 'src/modules/users/users.module';
@@ -27,15 +29,29 @@ import { AppService } from './app.service';
 				outputAs: 'class',
 			},
 		}),
+		MailerModule.forRoot({
+			transport: {
+				host: 'smtp-relay.sendinblue.com',
+				port: 587,
+				auth: {
+					user: 'koledaevgeny@gmail.com',
+					pass: '4n8y907IQqBkTWzP',
+				},
+				secure: false,
+			},
+			defaults: {
+				from: '"nest-modules" <modules@nestjs.com>',
+			},
+			template: {
+				dir: process.cwd() + '/public/templates/',
+				adapter: new HandlebarsAdapter(), // or new PugAdapter()
+				options: {
+					strict: true,
+				},
+			},
+		}),
 	],
 	controllers: [AppController],
-	providers: [
-		AppService,
-		// {
-		// 	provide: 'APP_GUARD',
-		// 	useClass: JwtAuthGuard,
-		// },
-		DateScalar,
-	],
+	providers: [AppService, DateScalar],
 })
 export class AppModule {}

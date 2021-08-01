@@ -2,7 +2,6 @@ import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { Repository, Connection } from 'typeorm';
 
 import { ERRORS } from 'src/constants';
-import { generatePassword } from 'src/utils/helpers/password';
 import { LoginsService } from 'src/modules/logins/logins.service';
 import { UpdateLoginDto } from 'src/modules/logins/dto/update-login.dto';
 
@@ -101,25 +100,5 @@ export class UsersService {
 		await this.loginsService.remove(id);
 
 		return { id };
-	}
-
-	async resetPassword(email: string): Promise<{ id: string }> {
-		let user = await this.userRepository.findOne({
-			where: { email },
-		});
-
-		if (!user) {
-			throw new HttpException(
-				ERRORS.dataErrors.invalidDataProvided,
-				HttpStatus.BAD_REQUEST,
-			);
-		}
-
-		let newPassword = generatePassword(20);
-		await this.loginsService.update(user.id, { password: newPassword });
-
-		return {
-			id: user.id,
-		};
 	}
 }
