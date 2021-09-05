@@ -24,6 +24,6 @@ export default {
 		},
 	},
 	mailer: {
-		originAdress: 'koledaevgeny@gmail.com',
+		originAdress: 'evsx.inc@gmail.com',
 	},
 };
