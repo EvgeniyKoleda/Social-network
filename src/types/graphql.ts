@@ -15,6 +15,7 @@ export class CreateUserInput {
     birthDate: Date;
     password: string;
     login: string;
+    avatar?: Upload;
 }
 
 export class UpdateUserInput {
@@ -25,10 +26,18 @@ export class UpdateUserInput {
     birthDate?: Date;
 }
 
+export class File {
+    filename: string;
+    mimetype: string;
+    encoding: string;
+}
+
 export abstract class IMutation {
     abstract login(login: string, password: string): LoginData | Promise<LoginData>;
 
     abstract signup(userData?: CreateUserInput): User | Promise<User>;
+
+    abstract file(file?: Upload): User | Promise<User>;
 
     abstract resetPassword(email: string): ResetPasswordResponse | Promise<ResetPasswordResponse>;
 
@@ -72,3 +81,5 @@ export class User {
     login?: Login;
     birthDate?: Date;
 }
+
+export type Upload = any;

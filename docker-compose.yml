@@ -58,6 +58,20 @@ services:
             POSTGRES_USER: socnet-admin
             POSTGRES_DB: socnet
             PGDATA: /var/lib/postgresql/data
+    localstack:
+        container_name: localstack
+        image: localstack/localstack
+        networks: 
+            - socnet
+        ports:
+            - '4566:4566'
+        environment:
+            - SERVICES=s3
+            - AWS_DEFAULT_REGION=us-east-1
+            - EDGE_PORT=4566
+        volumes:
+            - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+            - "/var/run/docker.sock:/var/run/docker.sock"
 networks:
     socnet:
         driver: bridge

@@ -1,5 +1,7 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { Repository, Connection } from 'typeorm';
+import { createWriteStream } from 'fs';
+import { join } from 'path';
 
 import { ERRORS } from 'src/constants';
 import { LoginsService } from 'src/modules/logins/logins.service';
@@ -20,7 +22,19 @@ export class UsersService {
 	) {}
 
 	async create(createUserDto: CreateUserDto): Promise<User> {
-		let { password, login, ...userData } = createUserDto;
+		let {
+			avatar: promisedAvatar,
+			password,
+			login,
+			...userData
+		} = createUserDto;
+
+		if (promisedAvatar) {
+			const { filename, createReadStream } = await promisedAvatar;
+			await createReadStream().pipe(
+				createWriteStream(join('/app', `/uploads/${filename}`)),
+			);
+		}
 
 		if (!(password && login)) {
 			throw new HttpException(
