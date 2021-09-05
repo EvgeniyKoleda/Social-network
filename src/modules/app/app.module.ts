@@ -5,7 +5,7 @@ import { join } from 'path';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { AwsSdkModule } from 'nest-aws-sdk';
-import { SharedIniFileCredentials, S3 } from 'aws-sdk';
+import { S3 } from 'aws-sdk';
 
 import typeOrmConfig from 'src/db/typeOrmConfig';
 import { UsersModule } from 'src/modules/users/users.module';
