@@ -23,6 +23,7 @@ type User {
     password: String
     login: Login
     birthDate: Date
+	avatarUrl: String
 }
 
 input UpdateUserInput {

@@ -10,7 +10,7 @@ export class AppService {
 
 	init() {
 		console.log('INIT APP');
-		this.s3ManagerService.initBuckets();
-		this.s3ManagerService.listBucket();
+		// this.s3ManagerService.initBuckets();
+		// this.s3ManagerService.listBucket();
 	}
 }

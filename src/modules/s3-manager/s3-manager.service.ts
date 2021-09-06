@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectAwsService } from 'nest-aws-sdk';
 import { S3 } from 'aws-sdk';
+import stream from 'stream';
 
 import { BUCKET_NAMES } from 'src/constants';
 
@@ -23,7 +24,7 @@ export class S3ManagerService {
 		});
 	}
 
-	async createBucket(Bucket: string) {
+	createBucket(Bucket: string) {
 		const params = {
 			Bucket,
 		};
@@ -62,6 +63,20 @@ export class S3ManagerService {
 					}
 				},
 			);
+		}
+	}
+
+	async putObjectByStream(
+		Bucket: string,
+		readStream: stream,
+		fileName: string,
+	) {
+		const params = { Bucket, Key: fileName, Body: readStream };
+
+		try {
+			return this.s3.upload(params).promise();
+		} catch (e) {
+			throw e;
 		}
 	}
 }

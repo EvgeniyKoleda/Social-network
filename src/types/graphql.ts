@@ -87,6 +87,7 @@ export class User {
 	password?: string;
 	login?: Login;
 	birthDate?: Date;
+	avatarUrl?: string;
 }
 
 export type Upload = any;
