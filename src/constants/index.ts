@@ -39,3 +39,8 @@ export class DeletedObject {
 export enum BUCKET_NAMES {
 	AVATARS = 'avatars',
 }
+
+export enum ENVIRONMENTS {
+	DEV = 'dev',
+	PROD = 'prod',
+}

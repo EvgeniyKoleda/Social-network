@@ -2,12 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectAwsService } from 'nest-aws-sdk';
 import { S3 } from 'aws-sdk';
 import stream from 'stream';
+import { ConfigService } from '@nestjs/config';
 
-import { BUCKET_NAMES } from 'src/constants';
+import { BUCKET_NAMES, ENVIRONMENTS } from 'src/constants';
 
 @Injectable()
 export class S3ManagerService {
-	constructor(@InjectAwsService(S3) private readonly s3: S3) {}
+	constructor(
+		@InjectAwsService(S3) private readonly s3: S3,
+		private configService: ConfigService,
+	) {}
 
 	async listBucketContents(bucket: string) {
 		const response = await this.s3
@@ -71,12 +75,25 @@ export class S3ManagerService {
 		readStream: stream,
 		fileName: string,
 	) {
-		const params = { Bucket, Key: fileName, Body: readStream };
+		let params = { Bucket, Key: fileName, Body: readStream };
 
 		try {
-			return this.s3.upload(params).promise();
+			let res = await this.s3.upload(params).promise();
+
+			return {
+				...res,
+				Location: this._getS3Url(res.Location),
+			};
 		} catch (e) {
 			throw e;
 		}
+	}
+
+	_getS3Url(location: string) {
+		const environment = this.configService.get<string>('ENVIRONMENT');
+
+		return environment === ENVIRONMENTS.PROD
+			? location
+			: location.replace('localstack', 'localhost');
 	}
 }

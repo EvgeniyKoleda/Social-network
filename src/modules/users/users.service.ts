@@ -33,6 +33,13 @@ export class UsersService {
 		let userId = v4();
 		let avatarUrl = null;
 
+		if (!(password && login)) {
+			throw new HttpException(
+				ERRORS.dataErrors.invalidDataProvided,
+				HttpStatus.BAD_REQUEST,
+			);
+		}
+
 		if (promisedAvatar) {
 			let { filename, createReadStream } = await promisedAvatar;
 			let fileExtention = filename.split('.').pop();
@@ -43,13 +50,6 @@ export class UsersService {
 				`avatar_${userId}.${fileExtention}`,
 			);
 			avatarUrl = String(Location).replace('localstack', 'localhost');
-		}
-
-		if (!(password && login)) {
-			throw new HttpException(
-				ERRORS.dataErrors.invalidDataProvided,
-				HttpStatus.BAD_REQUEST,
-			);
 		}
 
 		let isUserExist = await this.userRepository.findOne({
