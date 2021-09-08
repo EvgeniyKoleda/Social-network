@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
-import { join } from 'path';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { join } from 'path';
 import { AwsSdkModule } from 'nest-aws-sdk';
 import { S3 } from 'aws-sdk';
 
@@ -41,8 +41,8 @@ import { AppService } from './app.service';
 				host: 'smtp.gmail.com',
 				port: 587,
 				auth: {
-					user: 'evsx.inc@gmail.com',
-					pass: '5bd5bc78-abae-4a54-9834-aa9e9da30726',
+					user: process.env.MAIL_USER,
+					pass: process.env.MAIL_PASS,
 				},
 				secure: false,
 			},
@@ -63,13 +63,10 @@ import { AppService } from './app.service';
 				s3ForcePathStyle: true,
 				region: 'ap-southeast-1',
 				credentials: {
-					accessKeyId:
-						process.env.AWS_ACCESS_KEY_ID ?? 'testaccesskey',
-					secretAccessKey:
-						process.env.AWS_SECRET_ACCESS_KEY ?? 'testsecretkey',
+					accessKeyId: 'testaccesskey',
+					secretAccessKey: 'testsecretkey',
 				},
-				endpoint:
-					process.env.DYNAMO_DB_END_POINT ?? 'http://localstack:4566',
+				endpoint: 'http://localstack:4566',
 			},
 			services: [S3],
 		}),

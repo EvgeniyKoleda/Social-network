@@ -26,4 +26,5 @@ export default {
 	mailer: {
 		originAdress: 'evsx.inc@gmail.com',
 	},
+	filesDir: 'uploads',
 };

@@ -13,7 +13,7 @@ export let databaseProviders = [
 		provide: DATABASE_CONSTS.MONGO_CONNECTION,
 		useFactory: (): Promise<typeof mongoose> =>
 			mongoose.connect(
-				'mongodb+srv://socnet-admin:itechart2021@cluster0.ihe2k.mongodb.net/socnet?retryWrites=true&w=majority',
+				`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.ihe2k.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
 				{
 					useNewUrlParser: true,
 					useUnifiedTopology: true,

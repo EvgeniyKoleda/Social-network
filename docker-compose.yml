@@ -42,8 +42,8 @@ services:
         volumes:
             - ./docker_volumes/mongo/data/:/etc/mongo
         environment:
-            MONGO_INITDB_ROOT_USERNAME: socnet-admin
-            MONGO_INITDB_ROOT_PASSWORD: itechart2021
+            MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+            MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
     postgres:
         image: postgres
         restart: always
