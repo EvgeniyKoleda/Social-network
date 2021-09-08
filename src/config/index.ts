@@ -15,4 +15,15 @@ export default {
 			unit: 'd',
 		},
 	},
+	webApp: {
+		hostName: 'localhost',
+		protocol: 'http',
+		port: 3000,
+		getHost() {
+			return `${this.protocol}://${this.hostName}:${this.port}`;
+		},
+	},
+	mailer: {
+		originAdress: 'koledaevgeny@gmail.com',
+	},
 };

@@ -1,3 +1,5 @@
+import { GraphQLUpload } from 'graphql-upload';
+
 export class CreateUserDto {
 	readonly firstName: string;
 	readonly lastName: string;
@@ -6,4 +8,5 @@ export class CreateUserDto {
 	readonly birthDate: Date;
 	readonly password: string;
 	readonly login: string;
+	readonly avatar?: GraphQLUpload;
 }

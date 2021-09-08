@@ -29,6 +29,11 @@ export class AuthResolver {
 		throw new UnauthorizedException();
 	}
 
+	@Mutation('resetPassword')
+	async resetPassword(@Args('email') email: string) {
+		return this.authService.resetPassword(email);
+	}
+
 	@Mutation('signup')
 	async create(@Args('userData') userData: CreateUserDto) {
 		return this.usersService.create(userData);
