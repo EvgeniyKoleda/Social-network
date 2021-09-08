@@ -31,14 +31,18 @@ import { AppService } from './app.service';
 				path: join(process.cwd(), 'src/types/graphql.ts'),
 				outputAs: 'class',
 			},
+			uploads: {
+				maxFileSize: 10000000, // 10 MB
+				maxFiles: 5,
+			},
 		}),
 		MailerModule.forRoot({
 			transport: {
-				host: 'smtp-relay.sendinblue.com',
+				host: 'smtp.gmail.com',
 				port: 587,
 				auth: {
-					user: 'koledaevgeny@gmail.com',
-					pass: '4n8y907IQqBkTWzP',
+					user: 'evsx.inc@gmail.com',
+					pass: '5bd5bc78-abae-4a54-9834-aa9e9da30726',
 				},
 				secure: false,
 			},
