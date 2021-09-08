@@ -35,3 +35,12 @@ export class DeletedObject {
 	@ApiProperty()
 	readonly id: number;
 }
+
+export enum BUCKET_NAMES {
+	AVATARS = 'avatars',
+}
+
+export enum ENVIRONMENTS {
+	DEV = 'dev',
+	PROD = 'prod',
+}

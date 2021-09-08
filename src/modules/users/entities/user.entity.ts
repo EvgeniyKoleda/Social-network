@@ -23,6 +23,10 @@ export class User {
 	@Column({ length: 60, type: 'varchar' })
 	lastName: string;
 
+	@ApiProperty()
+	@Column({ length: 255, type: 'varchar' })
+	avatarUrl: string;
+
 	@BeforeInsert()
 	setFullName() {
 		this.fullName = `${this.firstName} ${this.lastName}`;

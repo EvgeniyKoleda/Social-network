@@ -21,11 +21,13 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/db/typeOrmConfig.ts migration:run",
     "migration:revert": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/db/typeOrmConfig.ts migration:revert",
-    "migration:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/db/typeOrmConfig.ts migration:create -n"
+    "migration:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/db/typeOrmConfig.ts migration:create -n",
+    "preinstall": "npx npm-force-resolutions"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.6.0",
     "@nestjs/common": "^7.5.1",
+    "@nestjs/config": "^1.0.1",
     "@nestjs/core": "^7.5.1",
     "@nestjs/graphql": "^7.10.3",
     "@nestjs/jwt": "^7.2.0",
@@ -35,14 +37,17 @@
     "@nestjs/swagger": "^4.7.12",
     "@nestjs/typeorm": "^7.1.5",
     "apollo-server-express": "^2.22.1",
+    "aws-sdk": "^2.983.0",
     "bcryptjs": "^2.4.3",
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.4",
+    "graphql-upload": "^12.0.0",
     "hbs": "^4.1.2",
     "helmet": "^4.4.1",
     "moment": "^2.29.1",
     "mongoose": "^5.11.8",
     "nest": "^0.1.6",
+    "nest-aws-sdk": "^2.0.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
@@ -82,6 +87,9 @@
     "ts-node": "^9.0.0",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.0.5"
+  },
+  "resolutions": {
+    "graphql-upload": "^11.0.0"
   },
   "jest": {
     "moduleFileExtensions": [

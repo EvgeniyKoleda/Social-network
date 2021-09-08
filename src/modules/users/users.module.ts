@@ -9,6 +9,7 @@ import {
 import { DatabaseModule } from 'src/db/database.module';
 import { LoginsModule } from 'src/modules/logins/logins.module';
 import { AuthModule } from 'src/modules/auth/auth.module';
+import { S3ManagerModule } from 'src/modules/s3-manager/s3-manager.module';
 
 import { User } from './entities/user.entity';
 import { userProviders } from './users.providers';
@@ -17,7 +18,12 @@ import { UsersController } from './users.controller';
 import { UsersResolver } from './graphql/users.resolver';
 
 @Module({
-	imports: [DatabaseModule, TypeOrmModule.forFeature([User]), LoginsModule],
+	imports: [
+		DatabaseModule,
+		TypeOrmModule.forFeature([User]),
+		S3ManagerModule,
+		LoginsModule,
+	],
 	controllers: [UsersController],
 	providers: [...userProviders, UsersService, UsersResolver],
 	exports: [UsersService],

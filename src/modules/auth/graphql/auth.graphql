@@ -1,4 +1,11 @@
 scalar Date
+scalar Upload
+
+type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+}
 
 type Mutation {
     login(login: String!, password: String!): LoginData
@@ -6,6 +13,10 @@ type Mutation {
 
 type Mutation {
     signup(userData: CreateUserInput): User
+}
+
+type Mutation {
+    file(file: Upload): User
 }
 
 type Mutation {
@@ -20,6 +31,7 @@ input CreateUserInput {
     birthDate: Date!
 	password: String!
     login: String!
+	avatar: Upload
 }
 
 type LoginData {
