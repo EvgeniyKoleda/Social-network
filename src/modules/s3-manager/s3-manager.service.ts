@@ -3,8 +3,11 @@ import { InjectAwsService } from 'nest-aws-sdk';
 import { S3 } from 'aws-sdk';
 import stream from 'stream';
 import { ConfigService } from '@nestjs/config';
+import { createWriteStream } from 'fs';
+import { join } from 'path';
 
 import { BUCKET_NAMES, ENVIRONMENTS } from 'src/constants';
+import config from 'src/config';
 
 @Injectable()
 export class S3ManagerService {
@@ -77,6 +80,10 @@ export class S3ManagerService {
 	) {
 		let params = { Bucket, Key: fileName, Body: readStream };
 
+		if (!this._isS3Enabled()) {
+			return this._writeOnLocalEnv(fileName, readStream);
+		}
+
 		try {
 			let res = await this.s3.upload(params).promise();
 
@@ -89,11 +96,38 @@ export class S3ManagerService {
 		}
 	}
 
-	_getS3Url(location: string) {
+	private _getS3Url(location: string) {
 		const environment = this.configService.get<string>('ENVIRONMENT');
 
 		return environment === ENVIRONMENTS.PROD
 			? location
 			: location.replace('localstack', 'localhost');
+	}
+
+	private _isS3Enabled() {
+		return JSON.parse(this.configService.get<string>('S3_ENABLED'));
+	}
+
+	private _writeOnLocalEnv(
+		fileName: string,
+		readStream: stream,
+	): Promise<{ Location: string }> {
+		let writeStream = createWriteStream(
+			join('/app', `/${config.filesDir}/${fileName}`),
+		);
+
+		let url = `${config.host.getHost()}/${fileName}`;
+
+		readStream.pipe(writeStream);
+
+		return new Promise((resolve, reject) => {
+			writeStream.on('finish', () =>
+				resolve({
+					Location: url,
+				}),
+			);
+
+			writeStream.on('error', reject);
+		});
 	}
 }
