@@ -109,12 +109,13 @@
 	</header>
 
 	<main>
-		<h2 class="main-header">Your password has been successfully reset</h2>
+		<h2 class="main-header">Thank you for a registration!</h2>
 		
 		<div class="text-container">
-			<p class="text-paragraph">Dear {{ receiverName }}, thank you for using our service.</p>
-			<p class="text-paragraph">We have generated a new password for you. You may change it on more comfortable in you profile settings.</p>
-			<p class="text-paragraph">Your new password: <strong>{{ newPassword }}</strong>.</p>
+			<p class="text-paragraph">Dear <strong>{{ receiverName }}</strong>, thank you for choosing our service.</p>
+			<p class="text-paragraph">Your password: <strong>{{ password }}</strong>.</p>
+			<p class="text-paragraph">Your login: <strong>{{ login }}</strong>.</p>
+			<p class="text-paragraph">You may login in your account using a button.</p>
 		</div>
 
 		<div class="login-button-container">
