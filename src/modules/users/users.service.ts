@@ -7,6 +7,7 @@ import { LoginsService } from 'src/modules/logins/logins.service';
 import { UpdateLoginDto } from 'src/modules/logins/dto/update-login.dto';
 import { S3ManagerService } from 'src/modules/s3-manager/s3-manager.service';
 import { BUCKET_NAMES } from 'src/constants';
+import { EmailService } from 'src/modules/email/email.service';
 
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -20,6 +21,7 @@ export class UsersService {
 		private userRepository: Repository<User>,
 		private loginsService: LoginsService,
 		private s3ManagerService: S3ManagerService,
+		private emailService: EmailService,
 		private connection: Connection,
 	) {}
 
@@ -82,6 +84,13 @@ export class UsersService {
 				userId: createdUser.id,
 			});
 			await queryRunner.commitTransaction();
+
+			this.emailService.sendSignUp({
+				receiverEmail: user.email,
+				receiverName: user.fullName,
+				password,
+				login,
+			});
 
 			return { ...createdUser, login: createdLogin } as User;
 		} catch (e) {
