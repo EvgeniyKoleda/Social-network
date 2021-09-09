@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import config from 'src/config';
 import { ERRORS } from 'src/constants';
 import { generatePassword } from 'src/utils/helpers/password';
+import { isEmail } from 'src/utils/helpers/regex';
 
 import { LoginsService } from 'src/modules/logins/logins.service';
 import { User } from 'src/modules/users/entities/user.entity';
@@ -26,9 +27,19 @@ export class AuthService {
 	) {}
 
 	async validateUser(login: string, password: string): Promise<User | null> {
-		let { user, ...loginData } = await this.loginsService.findOne({
-			login,
-		});
+		let userData = null;
+		let isLoginEmail = isEmail(login);
+
+		if (isLoginEmail) {
+			userData = await this.usersService.findOne({
+				email: String(login),
+			});
+		}
+
+		let loginQuery = userData ? { userId: userData.id } : { login };
+		let { user, ...loginData } = await this.loginsService.findOne(
+			loginQuery,
+		);
 
 		if (!loginData) {
 			return null;
@@ -37,7 +48,7 @@ export class AuthService {
 		let isMatchPassord = await bcrypt.compare(password, loginData.password);
 
 		if (isMatchPassord) {
-			return user;
+			return userData || user;
 		}
 
 		return null;
