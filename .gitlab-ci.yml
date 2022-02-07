@@ -18,7 +18,7 @@ build:
         - env
         - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
         # build and tag docker image
-        - docker build -t $CI_REGISTRY_IMAGE:$VERSION -t $CI_REGISTRY_IMAGE:latest .
+        - docker build -t $CI_REGISTRY_IMAGE:$VERSION -t $CI_REGISTRY_IMAGE:latest Dockerfile.dev
         # publish finished image
         - docker push $CI_REGISTRY_IMAGE:$VERSION
         - docker push $CI_REGISTRY_IMAGE:latest
