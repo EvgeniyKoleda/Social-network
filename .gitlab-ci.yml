@@ -16,3 +16,19 @@ eslint:
     - npm ci
     - echo "Lint source code with ESLint"
     - npm run lint
+
+prettier:
+  stage: lint
+  variables:
+    NODE_VERSION: 14.17.0
+  script:
+    - echo "Install nvm"
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+    - echo "Reload terminal"
+    - export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" --no-use
+    - echo "Reload terminal and install NodeJS"
+    - eval "[ -f .nvmrc ] && nvm install || nvm install $NODE_VERSION"
+    - echo "Install dependencies"
+    - npm ci
+    - echo "Format source code with Prettier"
+    - npm run format
