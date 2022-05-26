@@ -9,14 +9,12 @@ import config from 'src/config';
 export class EmailService {
 	constructor(private readonly mailerService: MailerService) {}
 
-	private getBaseConfig() {
+	private _getBaseConfig() {
 		return {
 			from: config.mailer.originAdress,
 			attachments: [
 				{
-					content: createReadStream(
-						join('/app', '/public/images/logo.png'),
-					),
+					content: createReadStream(join('/app', '/public/images/logo.png')),
 					cid: 'logo',
 					filename: 'logo.png',
 				},
@@ -24,14 +22,14 @@ export class EmailService {
 		};
 	}
 
-	public sendResetPassword(emailData: {
+	public async sendResetPassword(emailData: {
 		receiverEmail: string;
 		receiverName: string;
 		newPassword: string;
-	}): void {
-		this.mailerService
-			.sendMail({
-				...this.getBaseConfig(),
+	}): Promise<any> {
+		try {
+			return this.mailerService.sendMail({
+				...this._getBaseConfig(),
 				to: emailData.receiverEmail,
 				subject: 'Password has been reset successfully!',
 				template: 'public/templates/reset-password',
@@ -40,8 +38,33 @@ export class EmailService {
 					newPassword: emailData.newPassword,
 					webAppLogin: `${config.webApp.getHost()}/login`,
 				},
-			})
-			.then((success) => console.log(success))
-			.catch((err) => console.log(err));
+			});
+		} catch (e) {
+			throw e;
+		}
+	}
+
+	public async sendSignUp(emailData: {
+		receiverEmail: string;
+		receiverName: string;
+		password: string;
+		login: string;
+	}): Promise<any> {
+		try {
+			return this.mailerService.sendMail({
+				...this._getBaseConfig(),
+				to: emailData.receiverEmail,
+				subject: 'Thank you for a signup!',
+				template: 'public/templates/signup',
+				context: {
+					receiverName: emailData.receiverName,
+					password: emailData.password,
+					login: emailData.login,
+					webAppLogin: `${config.webApp.getHost()}/login`,
+				},
+			});
+		} catch (e) {
+			throw e;
+		}
 	}
 }

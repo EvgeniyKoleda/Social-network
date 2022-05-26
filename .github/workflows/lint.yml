@@ -1,0 +1,50 @@
+name: lint
+
+# register actions on push and pull request into master
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  eslint:
+    # environment for running
+    runs-on: ubuntu-latest
+    container:
+      image: node:14.17.0-alpine
+    steps:
+      # checkout repo via github actions
+      - uses: actions/checkout@v2
+      - name: Cache node.js modules
+        uses: actions/cache@v2
+        env:
+          cache-name: npm-${{ hashFiles('package-lock.json')}}
+        with:
+          path: .npm
+          key: ${{ env.cache-name }}
+          restore-keys: ${{ env.cache-name }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint source code with ESLint
+        run: npm run lint
+  prettier:
+    # environment for running
+    runs-on: ubuntu-latest
+    container:
+      image: node:14.17.0-alpine
+    steps:
+      # checkout repo via github actions
+      - uses: actions/checkout@v2
+      - name: Cache node.js modules
+        uses: actions/cache@v2
+        env:
+          cache-name: npm-${{ hashFiles('package-lock.json')}}
+        with:
+          path: .npm
+          key: ${{ env.cache-name }}
+          restore-keys: ${{ env.cache-name }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Format source code with Prettier
+        run: npm run format

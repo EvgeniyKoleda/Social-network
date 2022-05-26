@@ -17,9 +17,7 @@ export class S3ManagerService {
 	) {}
 
 	async listBucketContents(bucket: string) {
-		const response = await this.s3
-			.listObjectsV2({ Bucket: bucket })
-			.promise();
+		const response = await this.s3.listObjectsV2({ Bucket: bucket }).promise();
 		return response.Contents.map((c) => c.Key);
 	}
 
