@@ -5,8 +5,8 @@ cache:
   key:
     files:
       - package-lock.json
-    paths:
-      - .npm/
+  paths:
+    - .npm/
 
 before-script:
   - npm ci --cache .npm --prefer-offline
