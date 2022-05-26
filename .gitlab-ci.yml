@@ -4,8 +4,6 @@ stages:
 eslint:
   image: 14.17.0-alpine
   stage: lint
-  variables:
-    NODE_VERSION: 14.17.0
   script:
     - echo "Install dependencies"
     - npm ci
@@ -15,8 +13,6 @@ eslint:
 prettier:
   image: 14.17.0-alpine
   stage: lint
-  variables:
-    NODE_VERSION: 14.17.0
   script:
     - echo "Install dependencies"
     - npm ci
