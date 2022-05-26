@@ -17,8 +17,10 @@ jobs:
       # scripts description
       - name: Install NVM
         run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-      - name: Check nvm installed
-        run: which nvm & nvm -v
+      - name: Add nvm variable
+        run: export NVM_DIR="$HOME/.nvm"
+      - name: Reload terminal
+        run: . "$NVM_DIR/nvm.sh"
       - name: Install Node.js
         env:
           NODE_VERSION: 14.17.0
