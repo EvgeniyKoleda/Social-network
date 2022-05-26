@@ -10,7 +10,9 @@ on:
 jobs:
   eslint:
     # environment for running
-    runs-on: node:14.17.0-alpine
+    runs-on: ubuntu-latest
+    container:
+      image: node:14.17.0-alpine
     steps:
       # checkout repo via github actions
       - uses: actions/checkout@v2
@@ -20,7 +22,9 @@ jobs:
         run: npm run lint
   prettier:
     # environment for running
-    runs-on: node:14.17.0-alpine
+    runs-on: ubuntu-latest
+    container:
+      image: node:14.17.0-alpine
     steps:
       # checkout repo via github actions
       - uses: actions/checkout@v2
