@@ -1,4 +1,4 @@
-name: eslint
+name: lint
 
 # register actions on push and pull request into master
 on:
