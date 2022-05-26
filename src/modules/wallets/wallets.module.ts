@@ -31,8 +31,7 @@ export let enableWalletsSwagger = (app: INestApplication) => {
 		.build();
 
 	let options: SwaggerDocumentOptions = {
-		operationIdFactory: (controllerKey: string, methodKey: string) =>
-			methodKey,
+		operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
 		include: [WalletsModule, AuthModule],
 	};
 

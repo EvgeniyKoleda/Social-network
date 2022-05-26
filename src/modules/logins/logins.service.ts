@@ -43,10 +43,7 @@ export class LoginsService {
 		});
 	}
 
-	async update(
-		userId: string,
-		updateUserDto: UpdateLoginDto,
-	): Promise<Login> {
+	async update(userId: string, updateUserDto: UpdateLoginDto): Promise<Login> {
 		let login = await this.findOne({ userId });
 
 		let loginData = { ...updateUserDto };

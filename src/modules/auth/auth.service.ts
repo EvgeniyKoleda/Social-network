@@ -37,9 +37,7 @@ export class AuthService {
 		}
 
 		let loginQuery = userData ? { userId: userData.id } : { login };
-		let { user, ...loginData } = await this.loginsService.findOne(
-			loginQuery,
-		);
+		let { user, ...loginData } = await this.loginsService.findOne(loginQuery);
 
 		if (!loginData) {
 			return null;
@@ -61,9 +59,7 @@ export class AuthService {
 			accessToken: this.jwtService.sign(payload),
 			expiresIn: moment().add(
 				Number(config.security.expiresIn.time),
-				<moment.unitOfTime.DurationConstructor>(
-					config.security.expiresIn.unit
-				),
+				<moment.unitOfTime.DurationConstructor>config.security.expiresIn.unit,
 			),
 		};
 	}

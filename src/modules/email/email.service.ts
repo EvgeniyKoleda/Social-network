@@ -14,9 +14,7 @@ export class EmailService {
 			from: config.mailer.originAdress,
 			attachments: [
 				{
-					content: createReadStream(
-						join('/app', '/public/images/logo.png'),
-					),
+					content: createReadStream(join('/app', '/public/images/logo.png')),
 					cid: 'logo',
 					filename: 'logo.png',
 				},
