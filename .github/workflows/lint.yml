@@ -23,7 +23,7 @@ jobs:
         with:
           path: .npm
           key: ${{ env.cache-name }}
-          restore-key: ${{ env.cache-name }}
+          restore-keys: ${{ env.cache-name }}
       - name: Install dependencies
         run: npm ci
       - name: Lint source code with ESLint
@@ -43,7 +43,7 @@ jobs:
         with:
           path: .npm
           key: ${{ env.cache-name }}
-          restore-key: ${{ env.cache-name }}
+          restore-keys: ${{ env.cache-name }}
       - name: Install dependencies
         run: npm ci
       - name: Format source code with Prettier
