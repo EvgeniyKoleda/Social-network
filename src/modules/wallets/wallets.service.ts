@@ -28,10 +28,7 @@ export class WalletsService {
 		return this.walletRepository.findOne(id);
 	}
 
-	async update(
-		id: string,
-		updateWalletDto: UpdateWalletDto,
-	): Promise<Wallet> {
+	async update(id: string, updateWalletDto: UpdateWalletDto): Promise<Wallet> {
 		await this.walletRepository.save({ id, ...updateWalletDto });
 
 		return this.walletRepository.findOne(id);

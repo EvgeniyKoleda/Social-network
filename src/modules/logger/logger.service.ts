@@ -20,9 +20,9 @@ export class LoggerService implements DefaultLoggerService {
 					winston.format.timestamp(),
 					winston.format.printf(
 						(msg) =>
-							`[${moment(msg.timestamp).format(
-								DATE_TIME_FORMAT,
-							)}] [${msg.level}] - ${msg.message}`,
+							`[${moment(msg.timestamp).format(DATE_TIME_FORMAT)}] [${
+								msg.level
+							}] - ${msg.message}`,
 					),
 				),
 			}),

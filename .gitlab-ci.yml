@@ -8,6 +8,8 @@ eslint:
   script:
     - echo "Install nvm"
     - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+    - echo "Reload terminal"
+    - . "$NVM_DIR/nvm.sh"
     - echo "Install NodeJS"
     - nvm install $NODE_VERSION
     - echo "Install dependencies"
