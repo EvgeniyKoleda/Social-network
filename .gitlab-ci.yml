@@ -42,7 +42,7 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | > ~/.ssh/known_hosts
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/known_hosts
     # - scp -r $PWD deploy@ec2-3-127-197-161.eu-central-1.compute.amazonaws.com:~/social-network
     - rsync -a --progress --human-readable --delete --exclude-from '.gitignore' --exclude .gitignore --exclude .git
       . deploy@ec2-3-127-197-161.eu-central-1.compute.amazonaws.com:~/social-network
