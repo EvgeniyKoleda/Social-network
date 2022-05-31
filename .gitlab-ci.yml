@@ -28,3 +28,14 @@ prettier:
     - npm ci
     - echo "Format source code with Prettier"
     - npm run format
+
+deploy:
+  stage: deploy
+  image: node:14.17.0-alpine
+  script:
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - scp . deploy@ec2-3-127-197-161.eu-central-1.compute.amazonaws.com:~/social-network
+    - pm2 restart
