@@ -43,8 +43,6 @@ deploy:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" | tr -d '\r' >> ~/.ssh/known_hosts
-    - ssh -o StrictHostKeyChecking=no deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com "ls"
-    # - scp -r $PWD deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com:~/social-network
     - rsync -a --progress --human-readable --delete --exclude-from '.gitignore' --exclude .gitignore --exclude .git
       . deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com:~/social-network
-    - ssh deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com "pushd ~/social-network && npm install && pm2 restart social-network && popd"
+    - ssh -o StrictHostKeyChecking=no deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com "pushd ~/social-network && npm install && pm2 restart social-network && popd"
