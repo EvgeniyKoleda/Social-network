@@ -38,6 +38,8 @@ deploy:
   image: ubuntu:latest
   script:
     - apt -qq update && apt upgrade -qqy openssh-client rsync
+    - curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+    - sudo apt-get install -y nodejs
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
@@ -47,8 +49,11 @@ deploy:
     - ls -a
     - rm -rf . && rm -rf && rm -rf .git && rm -rf .npm
     - ls -a | grep .
+    - npm i
+    - npm run build
     - rsync -a --progress --human-readable --delete --exclude-from '.gitignore' --exclude .gitignore --exclude .git
-      . deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com:~/social-network
+      .dist deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com:~/social-network/dist
     # - scp -o StrictHostKeyChecking=no -r $PWD deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com:~/social-network
-    - ssh -o StrictHostKeyChecking=no deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com "pushd ~/social-network && npm install && popd"
-    - ssh -o StrictHostKeyChecking=no deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com "pushd ~/social-network && npm run build && cd dist && pm2 start main.js && popd"
+    # - ssh -o StrictHostKeyChecking=no deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com "pushd ~/social-network && npm install && popd"
+    # - ssh -o StrictHostKeyChecking=no deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com "pushd ~/social-network && npm run build && cd dist && pm2 start main.js && popd"
+    - ssh -o StrictHostKeyChecking=no deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com "pushd ~/social-network && cd dist && pm2 start main.js && popd"
