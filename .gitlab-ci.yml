@@ -43,12 +43,12 @@ deploy:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" | tr -d '\r' > ~/.ssh/known_hosts
-    # - ssh -o StrictHostKeyChecking=no deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com "mkdir social-network"
-    # - rsync -a --progress --human-readable --delete --exclude-from '.gitignore' --exclude .gitignore --exclude .git
-    #   . deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com:~/social-network
+    - ssh -o StrictHostKeyChecking=no deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com "ls"
     - ls -a
-    - rm -rf . && rm -rf && rm -rf .git
+    - rm -rf . && rm -rf && rm -rf .git && rm -rf .npm
     - ls -a | grep .
-    - scp -o StrictHostKeyChecking=no -r $PWD deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com:~/social-network
+    - rsync -a --progress --human-readable --delete --exclude-from '.gitignore' --exclude .gitignore --exclude .git
+      . deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com:~/social-network
+    # - scp -o StrictHostKeyChecking=no -r $PWD deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com:~/social-network
     - ssh -o StrictHostKeyChecking=no deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com "pushd ~/social-network && npm install && popd"
     - ssh -o StrictHostKeyChecking=no deploy@ec2-3-123-20-91.eu-central-1.compute.amazonaws.com "pushd ~/social-network && npm run build && cd dist && pm2 start main.js && popd"
