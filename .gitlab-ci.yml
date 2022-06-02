@@ -46,4 +46,4 @@ deploy:
     # - scp -r $PWD deploy@ec2-3-127-197-161.eu-central-1.compute.amazonaws.com:~/social-network
     - rsync -a --progress --human-readable --delete --exclude-from '.gitignore' --exclude .gitignore --exclude .git
       . deploy@ec2-3-127-197-161.eu-central-1.compute.amazonaws.com:~/social-network
-    - pm2 restart
+    - ssh deploy@ec2-3-127-197-161.eu-central-1.compute.amazonaws.com "pushd ~/social-network && npm install && pm2 restart social-network && popd"
