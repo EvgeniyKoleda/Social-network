@@ -43,12 +43,12 @@ deploy:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" | tr -d '\r' > ~/.ssh/known_hosts
-    - ssh -o StrictHostKeyChecking=no "$SSH_USER@$SSH_ADDRESS" "ls"
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_ADDRESS "ls"
     - ls -a
     - rm -rf . && rm -rf && rm -rf .git && rm -rf .npm
     - ls -a | grep .
     - rsync -a --progress --human-readable --delete --exclude-from '.gitignore' --exclude .gitignore --exclude .git
-      .dist $SSH_USER@$SSH_ADDRESS:~/social-network/dist
+      $SSH_USER@$SSH_ADDRESS:~/social-network
     # - scp -o StrictHostKeyChecking=no -r $PWD $SSH_USER@$SSH_ADDRESS:~/social-network
     # - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && npm install && popd"
     # - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && npm run build && cd dist && pm2 start main.js && popd"
