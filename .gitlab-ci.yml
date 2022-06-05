@@ -48,7 +48,7 @@ deploy:
     - rm -rf . && rm -rf && rm -rf .git && rm -rf .npm
     - ls -a | grep .
     - rsync -a --progress --human-readable --delete --exclude-from '.gitignore' --exclude .gitignore --exclude .git --exclude node_modules
-      $SSH_USER@$SSH_ADDRESS:~/social-network
+      $PWD $SSH_USER@$SSH_ADDRESS:~/social-network
     # - scp -o StrictHostKeyChecking=no -r $PWD $SSH_USER@$SSH_ADDRESS:~/social-network
     - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && npm ci && popd"
     - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && npm run build && cd dist && pm2 start main.js && popd"
