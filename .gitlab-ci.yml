@@ -13,43 +13,42 @@ cache:
   before_script:
     - npm ci --cache .npm --prefer-offline
 
+.before-install-dependencies: &before-install-dependencies
+  before_script:
+    - echo "Install dependencies"
+    - npm ci
+
 eslint:
   extends:
     - .default-cache
   image: node:14.17.0-alpine
   stage: lint
+  before_script: &before-install-dependencies
   script:
-    - echo "Install dependencies"
-    - npm ci
     - echo "Lint source code with ESLint"
     - npm run lint
 
 prettier:
   image: node:14.17.0-alpine
   stage: lint
+  before_script: &before-install-dependencies
   script:
-    - echo "Install dependencies"
-    - npm ci
     - echo "Format source code with Prettier"
     - npm run format
 
 deploy:
   stage: deploy
   image: ubuntu:latest
-  script:
+  before_script:
     - apt -qq update && apt upgrade -qqy openssh-client rsync
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" | tr -d '\r' > ~/.ssh/known_hosts
-    - ssh $SSH_USER@$SSH_ADDRESS "ls"
-    - ls -a
+  script:
     - rm -rf . && rm -rf && rm -rf .git && rm -rf .npm
-    - ls -a | grep .
     - rsync -a --progress --human-readable --delete --exclude-from '.gitignore' --exclude .gitignore --exclude .git --exclude node_modules
       . $SSH_USER@$SSH_ADDRESS:~/social-network
-    # - scp -o StrictHostKeyChecking=no -r $PWD $SSH_USER@$SSH_ADDRESS:~/social-network
     - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && npm ci && popd"
     - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && npm run build && cd dist && pm2 start main.js && popd"
-    # - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && cd dist && pm2 start main.js && popd"
