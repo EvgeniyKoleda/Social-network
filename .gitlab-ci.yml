@@ -13,17 +13,14 @@ cache:
   before_script:
     - npm ci --cache .npm --prefer-offline
 
-.before-install-dependencies: &before-install-dependencies
-  before_script:
-    - echo "Install dependencies"
-    - npm ci
-
 eslint:
   extends:
     - .default-cache
   image: node:14.17.0-alpine
   stage: lint
-  before_script: &before-install-dependencies
+  before_script:
+    - echo "Install dependencies"
+    - npm ci
   script:
     - echo "Lint source code with ESLint"
     - npm run lint
@@ -31,7 +28,9 @@ eslint:
 prettier:
   image: node:14.17.0-alpine
   stage: lint
-  before_script: &before-install-dependencies
+  before_script:
+    - echo "Install dependencies"
+    - npm ci
   script:
     - echo "Format source code with Prettier"
     - npm run format
