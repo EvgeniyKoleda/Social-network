@@ -2,7 +2,7 @@ import { ConnectionOptions } from 'typeorm';
 
 let config: ConnectionOptions = {
 	type: 'postgres',
-	host: 'postgres',
+	host: 'localhost',
 	port: 5432,
 	username: 'socnet-admin',
 	password: 'socnet-secure-password',
