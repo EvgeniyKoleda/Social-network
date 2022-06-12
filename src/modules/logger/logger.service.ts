@@ -1,16 +1,16 @@
 import { LoggerService as DefaultLoggerService } from '@nestjs/common';
-import { model } from 'mongoose';
+// import { model } from 'mongoose';
 import * as moment from 'moment';
 import * as winston from 'winston';
 
 import { DATE_TIME_FORMAT } from 'src/constants';
 
 import { MessageTypes } from './utils/constants';
-import { Logger, LoggerSchema } from './schemas/logger.schema';
-import { WriteNoteDto } from './dto/write-note.dto';
+// import { Logger, LoggerSchema } from './schemas/logger.schema';
+// import { WriteNoteDto } from './dto/write-note.dto';
 
 export class LoggerService implements DefaultLoggerService {
-	private loggerModel = model(Logger.name, LoggerSchema);
+	// private loggerModel = model(Logger.name, LoggerSchema);
 
 	private winstonLogger = winston.createLogger({
 		transports: [
@@ -32,18 +32,18 @@ export class LoggerService implements DefaultLoggerService {
 	async logMessage(type: MessageTypes, message: string, trace = '') {
 		this.winstonLogger.log(type, message);
 
-		return this.writeNote({
-			type,
-			message: message + trace,
-			date: moment().format(DATE_TIME_FORMAT),
-		});
+		// return this.writeNote({
+		// 	type,
+		// 	message: message + trace,
+		// 	date: moment().format(DATE_TIME_FORMAT),
+		// });
 	}
 
-	async writeNote(writeNoteDto: WriteNoteDto) {
-		let loggerNote = new this.loggerModel(writeNoteDto);
+	// async writeNote(writeNoteDto: WriteNoteDto) {
+	// 	let loggerNote = new this.loggerModel(writeNoteDto);
 
-		return loggerNote.save();
-	}
+	// 	return loggerNote.save();
+	// }
 
 	async log(message: string) {
 		return this.logMessage(MessageTypes.info, message);
