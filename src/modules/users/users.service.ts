@@ -5,7 +5,7 @@ import { v4 } from 'uuid';
 import { ERRORS } from 'src/constants';
 import { LoginsService } from 'src/modules/logins/logins.service';
 import { UpdateLoginDto } from 'src/modules/logins/dto/update-login.dto';
-import { S3ManagerService } from 'src/modules/s3-manager/s3-manager.service';
+// import { S3ManagerService } from 'src/modules/s3-manager/s3-manager.service';
 import { BUCKET_NAMES } from 'src/constants';
 import { EmailService } from 'src/modules/email/email.service';
 
@@ -20,7 +20,6 @@ export class UsersService {
 		@Inject(PROVIDER_CONSTS.USER_REPOSITORY)
 		private userRepository: Repository<User>,
 		private loginsService: LoginsService,
-		private s3ManagerService: S3ManagerService,
 		private emailService: EmailService,
 		private connection: Connection,
 	) {}
@@ -42,17 +41,17 @@ export class UsersService {
 			);
 		}
 
-		if (promisedAvatar) {
-			let { filename, createReadStream } = await promisedAvatar;
-			let fileExtention = filename.split('.').pop();
+		// if (promisedAvatar) {
+		// 	let { filename, createReadStream } = await promisedAvatar;
+		// 	let fileExtention = filename.split('.').pop();
 
-			let { Location } = await this.s3ManagerService.putObjectByStream(
-				BUCKET_NAMES.AVATARS,
-				createReadStream(),
-				`avatar_${userId}.${fileExtention}`,
-			);
-			avatarUrl = String(Location).replace('localstack', 'localhost');
-		}
+		// 	let { Location } = await this.s3ManagerService.putObjectByStream(
+		// 		BUCKET_NAMES.AVATARS,
+		// 		createReadStream(),
+		// 		`avatar_${userId}.${fileExtention}`,
+		// 	);
+		// 	avatarUrl = String(Location).replace('localstack', 'localhost');
+		// }
 
 		let isUserExist = await this.userRepository.findOne({
 			where: { email: createUserDto.email },

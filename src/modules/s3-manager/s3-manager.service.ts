@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InjectAwsService } from 'nest-aws-sdk';
+import { InjectAwsService } from 'nest-aws';
 import { S3 } from 'aws-sdk';
 import stream from 'stream';
 import { ConfigService } from '@nestjs/config';

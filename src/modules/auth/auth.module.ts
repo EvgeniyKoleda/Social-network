@@ -9,7 +9,7 @@ import { UsersService } from 'src/modules/users/users.service';
 import { userProviders } from 'src/modules/users/users.providers';
 import { DatabaseModule } from 'src/db/database.module';
 import { EmailModule } from 'src/modules/email/email.module';
-import { S3ManagerModule } from 'src/modules/s3-manager/s3-manager.module';
+// import { S3ManagerModule } from 'src/modules/s3-manager/s3-manager.module';
 
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
@@ -22,7 +22,6 @@ import { AuthResolver } from './graphql/auth.resolver';
 	imports: [
 		PassportModule,
 		LoginsModule,
-		S3ManagerModule,
 		forwardRef(() => UsersModule),
 		JwtModule.register({
 			secret: config.security.secretKey,

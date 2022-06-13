@@ -9,7 +9,7 @@ import {
 import { DatabaseModule } from 'src/db/database.module';
 import { LoginsModule } from 'src/modules/logins/logins.module';
 import { AuthModule } from 'src/modules/auth/auth.module';
-import { S3ManagerModule } from 'src/modules/s3-manager/s3-manager.module';
+// import { S3ManagerModule } from 'src/modules/s3-manager/s3-manager.module';
 import { EmailModule } from 'src/modules/email/email.module';
 
 import { User } from './entities/user.entity';
@@ -22,7 +22,6 @@ import { UsersResolver } from './graphql/users.resolver';
 	imports: [
 		DatabaseModule,
 		TypeOrmModule.forFeature([User]),
-		S3ManagerModule,
 		LoginsModule,
 		EmailModule,
 	],

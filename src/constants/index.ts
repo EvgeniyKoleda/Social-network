@@ -37,7 +37,7 @@ export class DeletedObject {
 }
 
 export enum BUCKET_NAMES {
-	AVATARS = 'avatars',
+	AVATARS = 'test-evsx',
 }
 
 export enum ENVIRONMENTS {
