@@ -7,7 +7,6 @@ export class AppService {
 	// constructor(private s3ManagerService: S3ManagerService) {
 	// 	this.init();
 	// }
-
 	// init() {
 	// 	console.log('INIT APP');
 	// 	this.s3ManagerService.initBuckets();
