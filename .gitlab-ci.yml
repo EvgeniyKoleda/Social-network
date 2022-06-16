@@ -62,4 +62,4 @@ deploy:
     - rsync -a --progress --human-readable --delete --exclude-from '.gitignore' --exclude .gitignore --exclude .git --exclude node_modules
       ./dist/* $SSH_USER@$SSH_ADDRESS:~/social-network
     # use -i #SSH_PRIVATE_KEY without running ssh-add if you set this gitlab variable as a file
-    - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && pm2 startOrReload npm --name \"api\" -- run "start:prod" && popd"
+    - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && pm2 restart npm --name \"api\" -- run "start:prod" && popd"
