@@ -35,6 +35,18 @@ prettier:
     - echo "Format source code with Prettier"
     - npm run format
 
+build:
+  stage: build
+  image: node:14.17.0-alpine
+  before_script:
+    - echo "Install dependencies"
+    - npm ci
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
 deploy:
   stage: deploy
   image: ubuntu:latest
@@ -46,9 +58,7 @@ deploy:
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" | tr -d '\r' > ~/.ssh/known_hosts
   script:
-    - rm -rf . && rm -rf && rm -rf .git && rm -rf .npm
     - rsync -a --progress --human-readable --delete --exclude-from '.gitignore' --exclude .gitignore --exclude .git --exclude node_modules
-      . $SSH_USER@$SSH_ADDRESS:~/social-network
+      ./dist/* $SSH_USER@$SSH_ADDRESS:~/social-network
     # use -i #SSH_PRIVATE_KEY without running ssh-add if you set this gitlab variable as a file
-    - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && npm ci && popd"
-    - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && npm run build && cd dist && pm2 start npm --name \"api\" -- run "start:prod" && popd"
+    - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && pm2 start npm --name \"api\" -- run "start:prod" && popd"
