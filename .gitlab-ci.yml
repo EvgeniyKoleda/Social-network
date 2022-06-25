@@ -60,9 +60,9 @@ deploy:
     - echo "$SSH_KNOWN_HOSTS" | tr -d '\r' > ~/.ssh/known_hosts
   script:
     - rsync -a --progress --human-readable --delete --exclude-from '.gitignore' --exclude .gitignore --exclude .git --exclude node_modules --exclude test --exclude src
-      . $SSH_USER@$SSH_ADDRESS:/var/www/social-network
+      . $SSH_USER@$SSH_ADDRESS:~/social-network
     # use -i #SSH_PRIVATE_KEY without running ssh-add if you set this gitlab variable as a file
-    - ssh $SSH_USER@$SSH_ADDRESS "pushd /var/www/social-network && pm2 reload npm --name \"api\" -- run "start:prod" && popd"
+    - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && pm2 reload npm --name \"api\" -- run "start:prod" && popd"
 
 start:
   stage: deploy
