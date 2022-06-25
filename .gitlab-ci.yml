@@ -75,5 +75,5 @@ start:
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" | tr -d '\r' > ~/.ssh/known_hosts
   script:
-    - ssh $SSH_USER@$SSH_ADDRESS "pushd /var/www/social-network && pm2 start npm --name \"api\" -- run "start:prod" && popd"
+    - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && pm2 start npm --name \"api\" -- run "start:prod" && popd"
   when: manual
