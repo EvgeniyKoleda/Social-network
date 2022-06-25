@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
 
 const tableName = 'users';
-const columnName = 'users';
+const columnName = 'avatarUrl';
 
 export class AddAvatarUrlColumn1630917530816 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
