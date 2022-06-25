@@ -63,6 +63,7 @@ deploy:
       . $SSH_USER@$SSH_ADDRESS:~/social-network
     # use -i #SSH_PRIVATE_KEY without running ssh-add if you set this gitlab variable as a file
     - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && pm2 reload \"api\" && popd"
+  dependencies: ['build']
 
 start:
   stage: deploy
