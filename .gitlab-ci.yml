@@ -84,5 +84,5 @@ start:
     - echo "SendEnv $MAIL_USER" >> ~/.ssh/config
   script:
     - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && npm ci && npm run migration:run && pm2 start npm --name \"api\" -- run "start:prod" && popd"
-    - ssh -o "SendEnv MAIL_PASS MAIL_USER" -t $SSH_USER@$SSH_ADDRESS "env | grep MAIL"
+    - ssh -o "SendEnv MAIL_PASS MAIL_USER" $SSH_USER@$SSH_ADDRESS "env | grep MAIL"
   when: manual
