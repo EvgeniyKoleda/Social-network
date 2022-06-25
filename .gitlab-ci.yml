@@ -64,7 +64,7 @@ deploy:
     - rsync -a --progress --human-readable --delete --exclude-from '.gitignore' --exclude .gitignore --exclude .git --exclude test --exclude src
       . $SSH_USER@$SSH_ADDRESS:~/social-network
     # use -i #SSH_PRIVATE_KEY without running ssh-add if you set this gitlab variable as a file
-    - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && npm ci --production && pm2 reload \"api\" && popd"
+    - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && npm ci --production && npm run migration:run && pm2 reload \"api\" && popd"
   dependencies: ['build']
 
 start:
@@ -78,5 +78,5 @@ start:
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" | tr -d '\r' > ~/.ssh/known_hosts
   script:
-    - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && pm2 start npm --name \"api\" -- run "start:prod" && popd"
+    - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && npm ci --production && npm run migration:run && pm2 start npm --name \"api\" -- run "start:prod" && popd"
   when: manual
