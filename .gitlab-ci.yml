@@ -67,7 +67,7 @@ deploy:
       . $SSH_USER@$SSH_ADDRESS:~/social-network
     # use -i #SSH_PRIVATE_KEY without running ssh-add if you set this gitlab variable as a file
     - ssh $SSH_USER@$SSH_ADDRESS "pushd ~/social-network && npm ci && npm run migration:run && pm2 reload \"api\" && popd"
-    - ssh -o "SendEnv MAIL_PASS MAIL_USER" -t $SSH_USER@$SSH_ADDRESS "env | grep MAIL"
+    - ssh -o "SendEnv MAIL_PASS MAIL_USER" $SSH_USER@$SSH_ADDRESS "env | grep MAIL"
   dependencies: ['build']
 
 start:
