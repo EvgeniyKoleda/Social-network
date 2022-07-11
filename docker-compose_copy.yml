@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+    postgres:
+        image: postgres:12.7-alpine
+        hostname: postgres
+        restart: always
+        networks:
+            - proxy
+        deploy:
+            labels: ["traefik.enabled=false"]
+            mode: replicated
+            replicas: 1
+            update_config:
+                parallelism: 2
+                delay: 10s
+            restart_policy: 
+                condition: on-failure
+        environment:
+            POSTGRES_PASSWORD: production
+
+    web:
+        image: "${CI_REGISTRY}/soc-net/E-wallet-react:${CI_COMMIT_REF_SLUG:-main}"
+        networks:
+            - proxy
+        depends_on:
+            - node
+        deploy:
+            labels: 
+                - "traefik.backend=${CI_COMMIT_REF_SLUG}"
+                - "traefik.frontend.rule=Host:${CI_COMMIT_REF_SLUG}.${REACT_APP_HOST}"
+                - "traefik.docker.network=proxy"
+                - "traefik.enabled=true"
+                - "traefik.port=80"
+                - "traefik.backend.loadbalancer.method=drr"
+                - "traefik.default.protocol=http"
+            mode: replicated
+            replicas: 1
+            update_config:
+                parallelism: 2
+                delay: 10s
+            restart_policy: 
+                condition: on-failure
+    node:
+        image: "${CI_REGISTRY}/soc-net/Social-network:${CI_COMMIT_REF_SLUG:-main}"
+        networks:
+            - proxy
+        depends_on:
+            - postgres
+        environment:
+            - name=value
+        deploy:
+            labels: 
+                - "traefik.backend=${CI_COMMIT_REF_SLUG:-main}"
+                - "traefik.frontend.rule=Host:${CI_COMMIT_REF_SLUG}.${REACT_APP_HOST};PathPrefix:/graphql"
+                - "traefik.docker.network=proxy"
+                - "traefik.enabled=true"
+                - "traefik.port=9000"
+                - "traefik.backend.loadbalancer.method=drr"
+                - "traefik.default.protocol=http"
+            mode: replicated
+            replicas: 1
+            update_config:
+                parallelism: 2
+                delay: 10s
+            restart_policy: 
+                condition: on-failure
+networks:
+    proxy:
+        extenal: true
+        name: proxy
